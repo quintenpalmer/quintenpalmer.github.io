@@ -1,6 +1,8 @@
+---
 layout: post
 title: Introducing My Musiq Player and Blog Series
 date: 2023-01-15
+---
 
 # Introduction
 
