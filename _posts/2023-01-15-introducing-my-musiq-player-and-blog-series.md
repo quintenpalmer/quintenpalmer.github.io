@@ -9,7 +9,7 @@ Hello! My name is Quinten and this is the first installment of a series of techn
 
 (tl;dr: it's a Rust application for Linux that organizes and plays back music and I'll be digging into various UX/database/API topics)
 
-## What is this Musiqapp?
+## What is this MusiqApp?
 
 My `musiqapp` application is a media player that I have been working on to solve a problem for myself: I have been acquiring digital media (I can dig into the philosophy of why I have gone this route another time) and want an intuitive and responsive app to let myself organize, explore, and play back my music.
 
