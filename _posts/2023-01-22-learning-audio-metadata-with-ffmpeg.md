@@ -192,7 +192,7 @@ ffmpeg \
     -metadata TITLE="Wonderful Time" \
     -metadata DATE=2009 \
     -metadata GENRE="Dance Pop" \
-    01.Dance_Pop.flac
+    example_song.flac
 ```
 
 This should create a file that looks like our example JSON from above. Let's talk through each piece:
@@ -204,16 +204,16 @@ This should create a file that looks like our example JSON from above. Let's tal
 	* This is the tone that we want to generate, a sine wave, with a frequency of 220 for a duration of 4 seconds
 * ``-metadata {KEY}={VALUE}`
 	* These are us setting each of the individual metadata values
-* `1.Dance_Pop.flac`
-	* This tells `ffmpeg` to write all of this out to a file with this name. `ffmpeg` infers the encoding from the file extension `.flac` and the rest of the filename is to try to be helpful to a human reading it. We could have included the artist and album in the filename if we wanted too; or we could have called it just `tone.flac`, as long as it specifies the file extension, `ffmpeg` will be happy.
+* `example_song.flac`
+	* This tells `ffmpeg` to write all of this out to a file with this name. `ffmpeg` infers the encoding from the file extension `.flac`, the rest of the filename doesn't matter to `ffmpeg`
 
 ### Inspecting a File with `ffprobe`
 
 Let's take a look at this file we just generated with `ffprobe` now:
 
 ```bash
-ffprobe -hide_banner 01.Dance_Pop.flac
-Input #0, flac, from '1.Dance_Pop.flac':
+ffprobe -hide_banner example_song.flac
+Input #0, flac, from 'example_song.flac':
   Metadata:
     ARTIST          : The Cool Band
     album_artist    : The Cool Band
@@ -233,7 +233,7 @@ Input #0, flac, from '1.Dance_Pop.flac':
 Taking a look at this output, let's discuss what we see here:
 * `-hide_banner`
 	* Normally the all of these tools display a lot of build information that is honestly just noisy, so we're going to supress it
-* `1.Dance_Pop.flac`
+* `example_song.flac`
 	* If you run this in the same directory you generated the file in, this is the main input to `ffprobe`
 * `Input #0`
 	* This output line just lets us know what input this output is for (the one we passed it)
@@ -247,23 +247,23 @@ Taking a look at this output, let's discuss what we see here:
 Most people using `ffmpeg` use it to operate on existing data, so let's try that now. Some of you may have noticed that the initial JSON had an album named "Fun Songs for Dancing" while our file we tagged had the album "Funky Songs for Dancing". Let's fix that!
 
 ```bash
-mv 01.Dance_Pop.flac old.01.Dance_Pop.flac
+mv example_song.flac old_example_song.flac
 ```
 ```bash
 ffmpeg \
-	-i old.1.Dance_Pop.flac \
+	-i old_example_song.flac \
 	-c copy \
 	-metadata "ALBUM=Fun Songs for Dancing" \
-	01.Dance_Pop.flac
+	example_song.flac
 ```
 
 Let's talk through this, piece by piece, again:
-* `mv filename.flac old_filename.flac`
+* `mv example_song.flac old_example_song.flac`
 	* `ffmpeg` doesn't allow you to write out to the same file that you are using as input, so we have to rename the file with `mv` before we can start
 	* For reference, it gives you the following error lines before exiting early:
-		* `Output 1.Dance_Pop.flac same as Input #0 - exiting`
+		* `Output example_song.flac same as Input #0 - exiting`
 		* `FFmpeg cannot edit existing files in-place.`
-* `-i old_filename.flac`
+* `-i old_example_song.flac`
 	* We specify this old filename as the input for `ffmpeg`
 * `-c copy`
 	* We want `ffmepg` to leave the contents of the actual audio information alone here, so we give it the `-c` (short for `-codec`) option with the value `copy` to tell `ffmpeg` to copy the audio information 1:1
@@ -273,7 +273,7 @@ Let's talk through this, piece by piece, again:
 		* You only need to capture the arguments that would otherwise have a space in them, some other ways that you could do this would be:
 			* `-metadata ALBUM="Fun Songs for Dancing"`
 			* `-metadata ALBUM=Fun\ Songs\ for\ Dancing`
-* `1.Dance_Pop.flac`
+* `example_song.flac`
 	* This specifies the output filename, also like when creating the file initially
 
 ### Playing a File with `ffplay`
