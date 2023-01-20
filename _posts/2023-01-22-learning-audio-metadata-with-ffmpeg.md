@@ -39,12 +39,12 @@ A simple way to think of the metadata we will be working with here is as a map o
 
 The keys and their values should hopefully be pretty self-explanatory. I'll just mention a few things:
 * I have not noticed that any of schemas for this metadata have a concept of data types, so every value is just a string
-* `"artist" vs `"album_artist"
-	* "album_artist" is meant to be a single value that should be the same for every track in an album
-	* "artist" can vary from track to track in an album
-	* Think of an album released by a many artists (like some kind of collaborative effort/group project) and the "album_artist" would maybe be all involved artists or just "Various Artists" and the "artist" value would be the specific artist for each track
+* `"artist"` vs `"album_artist"
+	* `"album_artist"` is meant to be a single value that should be the same for every track in an album
+	* `"artist"` can vary from track to track in an album
+	* Think of an album released by a many artists (like some kind of collaborative effort/group project) and the `"album_artist"` would maybe be all involved artists or just "Various Artists" and the `"artist"` value would be the specific artist for each track
 * `"disctotal"` and `"tracktotal"
-	* These just let you know how many total values exist for the given album; "disc" and "track" should never exceed these values
+	* These just let you know how many total values exist for the given album; `"disc"` and `"track"` should never exceed these values
 
 To repeat, each file will have all of this information tagged on it. There is no `album.json` or anything that contains the album information that the tracks can refer to, it will all be repeated, or can be computed after by looking at all tracks that "belong togeter" (we'll get to how to decide what tracks are together in a future blog post).
 
