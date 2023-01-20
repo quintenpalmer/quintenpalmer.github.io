@@ -20,7 +20,7 @@ I don't really have much to add beyond that for metadata in general, let's see w
 
 Today the metadata we will be talking about will be data concerning album info, artist info, track info, etc. The data "proper" would be the bits that represent the audio waveform to reproduce for your speakers/headphones/etc. Each audio file will have this metadata inside their file contents.
 
-A simple way to think of the metadata we will be working with here is as a map of keys to values. For all of the text metadata, it could map to [JSON](https://www.json.org/json-en.html), which I'll use to establish a baseline. An example of some metadata (exact names of the keys will vary based on the encoding format; we'll cover those exact details in a bit) we hope to see in a given music file would be something like:
+A simple way to think of the metadata we will be working with here is as a map of keys to values. For all of the text metadata, it could map to [JSON](https://www.json.org/json-en.html), which I'll use to establish a baseline. An example of some metadata (exact names of the keys will vary based on the encoding format; we'll cover those exact details in a bit) we expect to see in a given music file would be something like:
 
 ```JSON
 {
@@ -46,7 +46,7 @@ The keys and their values should hopefully be pretty self-explanatory. I'll just
 * `"disctotal"` and `"tracktotal"
 	* These just let you know how many total values exist for the given album; "disc" and "track" should never exceed these values
 
-To repeat, each file will have all of this information tagged on it. There is no `album.json` or anything that contains the album information that the tracks can refer to, it will all be repeated, or can be computed after by looking at all tracks that "belong togeter" (we'll get to how to decide what tracks are together much later).
+To repeat, each file will have all of this information tagged on it. There is no `album.json` or anything that contains the album information that the tracks can refer to, it will all be repeated, or can be computed after by looking at all tracks that "belong togeter" (we'll get to how to decide what tracks are together in a future blog post).
 
 With this hypothetical JSON example in mind, let's dig into some specific formats.
 
@@ -66,11 +66,11 @@ An [Audio Coding Format](https://en.wikipedia.org/wiki/Audio_coding_format) is a
 
 ### Metadata Container
 
-Some audio file formats define a specification for metadata, but some do not. If the file format does not define how to embed metadata directly, a separate metadata container will be leveraged. This is what we will be focusing on today.
+Some audio file formats define a specification for metadata, but some do not. If the file format does not define how to embed metadata directly, a separate metadata container will be leveraged. These metadata containers are what we will be focusing on today.
 
 ## Concrete Audio File Formats
 
-We're only going to be focusing on two audio file formats here: [FLAC](https://en.wikipedia.org/wiki/FLAC) and [MP3](https://en.wikipedia.org/wiki/MP3). Please note: MP3 and FLAC are both a kind of audio file format as well as the name of their audio coding formats. Let's take a look at these two file formats and the related metadata containers that exist for them.
+We're only going to be focusing on two audio file formats here: [FLAC](https://en.wikipedia.org/wiki/FLAC) and [MP3](https://en.wikipedia.org/wiki/MP3). Please note: MP3 and FLAC are both a kind of audio file format as well as the name of their audio coding formats. Let's take a look at these two file formats and the related metadata containers that exist for them. Just to spell them both out:
 
 ### MP3
 
@@ -143,7 +143,7 @@ To use their own words:
 And to quote [Wikipedia](https://en.wikipedia.org/wiki/FFmpeg):
 > **FFmpeg** is a [free and open-source software](https://en.wikipedia.org/wiki/Free_and_open-source_software "Free and open-source software") project consisting of a suite of [libraries](https://en.wikipedia.org/wiki/Library_(computing) "Library (computing)") and [programs](https://en.wikipedia.org/wiki/Computer_program "Computer program") for handling video, audio, and other [multimedia](https://en.wikipedia.org/wiki/Multimedia "Multimedia") files and streams. At its core is the [command-line](https://en.wikipedia.org/wiki/Command-line_interface "Command-line interface") `ffmpeg` tool itself, designed for processing of video and audio files.
 
-The main thing that we'll be leveraging FFmpeg for throughout this blog post is to manipulate the metadata. FFmpeg is so much more powerful though, we really are using so little of what it is capable of. FFmpeg rocks, it's worth poking around with if you're curious about! Anyways, back on track.
+The main thing that we'll be leveraging FFmpeg for throughout this blog post is to manipulate the metadata. FFmpeg is so much more powerful though, we really are using so little of what it is capable of. FFmpeg rocks, it's worth poking around with if you're curious about it! Anyways, back on track.
 
 ## FFmpeg Binaries
 
