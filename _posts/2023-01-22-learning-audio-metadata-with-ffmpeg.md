@@ -126,6 +126,7 @@ The FLAC specification does not define the metadata field names to use (see sect
 | `title` | Track Title | `title` |
 | `date` | Year of Release | `date` |
 | `genre` | Song Genre | `genre` |
+
 \* I have not seen `totaldiscs` nor `totaltracks` tagged in any music I've purchased, but I do see `disctotal` in 98% of tracks with a `discnumber` tagged (not all distrobutions seem to tag a `discnumber` if there is only one disc) and `tracktotal` in >50% of my total tracks.
 
 With all of this in mind, let's try to get some rubber on some road and use a real tool that will inspect real files, using `ffmpeg`.
