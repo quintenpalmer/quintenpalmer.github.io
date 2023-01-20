@@ -12,7 +12,7 @@ Welcome [back](2023/01/15/introducing-my-musiq-player-and-blog-series) for the f
 ## What is Metadata?
 
 Let's start at the top, "what is metadata?". To quote [Wikipedia](https://en.wikipedia.org/wiki/Metadata):
-> **Metadata** is "data" that provides information about other data", but not the content of the data, such as the text of a message or the image itself.
+> **Metadata** is "data that provides information about other data", but not the content of the data, such as the text of a message or the image itself.
 
 I don't really have much to add beyond that for metadata in general, let's see what kind of metadata exists for our media.
 
