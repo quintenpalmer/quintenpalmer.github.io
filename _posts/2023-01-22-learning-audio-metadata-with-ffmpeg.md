@@ -87,15 +87,16 @@ Let's dig into the specifics of the metadata tagging used with each audio format
 	* The key name for this specification
 * Value Description
 	* Plain english description of what this value represents
-* Canonical Key
-	* Our canonical key that we will use in future sections
-	* Hint for the future: these canonical keys are what `ffmpeg` reports and can operate on
+* FFmpeg Canonical Key
+	* We will treat these as the canonical frame key names
+	* These are what FFmpeg uses across most formats instead of the specific names for each format
+		* (We'll get into FFmpeg soon, one of these sections had to be first before we dug into the other, sorry)
 
 ## ID3 (MP3)
 
 As enumerated on [Wikipedia](https://en.wikipedia.org/wiki/ID3#ID3v2_frame_specification) the ID3 spec lists the following that we will care about:
 
-| ID3 Frame Key | Value Description | Canonical Key |
+| ID3 Frame Key | Value Description | FFmpeg Canonical Key |
 |---|---|---|
 | `TPE1` | Track Artist | `artist` |
 | `TPE2` | Album Artist | `album_artist` |
@@ -108,13 +109,13 @@ As enumerated on [Wikipedia](https://en.wikipedia.org/wiki/ID3#ID3v2_frame_speci
 | `TYER` | Year of Release | `date` |
 | `TCON` | Song Genre | `genre` |
 
-These values don't match precisely what Wikipedia reports, but the mapping I am describing do match what I've seen in the real world, for whatever that is worth.
+The value descriptions don't match precisely what Wikipedia reports, but the mapping I am describing do match what I've seen in the real world, for whatever that is worth. Theory vs Practice and whatnot.
 
 ## FLAC
 
 The FLAC specification does not define the metadata field names to use (see section 9.6.1 of the [spec](https://datatracker.ietf.org/doc/draft-ietf-cellar-flac/)) so we'll follow their link to MusicBrainz's [basic tags](http://picard-docs.musicbrainz.org/en/variables/tags_basic.html) and [advanced tags](http://picard-docs.musicbrainz.org/en/variables/tags_advanced.html) and we can establish:
 
-| FLAC Frame Key | Value Description | Canonical Key |
+| FLAC Frame Key | Value Description | FFmpeg Canonical Key |
 |---|---|---|
 | `artist` | Track Artist | `artist` |
 | `albumartist` | Album Artist | `album_artist` |
