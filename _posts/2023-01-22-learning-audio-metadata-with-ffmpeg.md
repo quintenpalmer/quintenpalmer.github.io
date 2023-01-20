@@ -168,7 +168,11 @@ This tool will play back a given file, be it a music file, video file, image, or
 
 ## Example Usages of `ffmpeg` and `ffprobe`
 
-Now that we're about to actually use the FFmpeg binaries, I should mention: FFmpeg has useful mappings from the "abstract" keys (field names) that was mentioned in the beginning into the actual proper keys for the files it knows how to operate on. I've just grown accustomed to using these key names, so it's what we will be using here.
+As mentioned with the specific file formats, ffmpeg has canonical names for the frame keys, the best documentatation that I can find that matches with what I've seen in the real world can be found [here](https://wiki.multimedia.cx/index.php/FFmpeg_Metadata#MP3). We'll be using these canonical keys, but note that it will turn into the specific frame key names that were described for both MP3 and FLAC\*.
+
+\* With just two small notes:
+* This means that specifying `"album_artist"` as a key for FLAC will actually transform it to `"albumartist"`, which are so close, but are technically different
+* `"disctotal"` and `"tracktotal"` still seem to be what FFmpeg converts into for flac instead of the MusicBrainz's `"totaldiscs"` and `"totaltracks"`
 
 ### Generating a File with `ffmpeg`
 
