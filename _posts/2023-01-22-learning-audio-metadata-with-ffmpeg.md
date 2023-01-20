@@ -281,17 +281,19 @@ Let's talk through this, piece by piece, again:
 If you want to hear 4 seconds of a 220Hz sine wave, you can play back our generated file with:
 
 ```bash
-ffplay -autoexit 01.Dance_Pop.flac
+ffplay -autoexit example_song.flac
 ```
 
 Real quick:
 * `-autoexit`
 	* By default, `ffplay` will not exit when the playback is over; this tells it to do so
-* `01.Dance_Pop.flac`
+* `example_song.flac`
 	* This specifies the input file to play
 
 Alright, that was a decent amount of specifications and real-world usage of `ffmpeg`. If you want to poke around with existing music files you have, hopefully you have the knowledge to know what to look for and what to make of it all. Let's wrap up and prepare for the next installment.
 
 # Conclusion
 
-Now we all hopefully know about audio file formats and their metadata and we can be ready to leverage this in the next blog post where I'll be going over how I ingest all of this information and use it to build a data source that my application will build on top of. Stay tuned!
+Now we all hopefully know about audio file formats and their metadata and we can be ready to leverage this in the next blog post where I'll be going over how I ingest all of this information and use it to build a data source that my application will build on top of. 
+
+A quick sneak peak: the next post will be writing Rust code and using Rust libraries to process music files and build up a tree of what my Musiq App considers a "canonical" "library" (intentional separate scare quotes). Stay tuned!
