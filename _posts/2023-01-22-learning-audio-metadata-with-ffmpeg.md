@@ -292,7 +292,7 @@ Real quick:
 
 ## Trying FFmpeg Yourself
 
-I have a [collection of shell scripts](https://github.com/quintenpalmer/quintenpalmer.github.io/blob/main/codeexamples/2022-01-22) that you can run yourself to toy around with FFmpeg as we did here. You'll need to install `ffmpeg` either from the package manager on your system or from their [download page](https://ffmpeg.org/download.html). Enjoy!
+I have a [collection of shell scripts](https://github.com/quintenpalmer/quintenpalmer.github.io/blob/main/codeexamples/2022-01-22-ffmpeg) that you can run yourself to toy around with FFmpeg as we did here. You'll need to install `ffmpeg` either from the package manager on your system or from their [download page](https://ffmpeg.org/download.html). Enjoy!
 
 # Conclusion
 
