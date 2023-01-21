@@ -54,3 +54,43 @@ pub struct AudioFileTrackMetadata {
     pub genre: Option<String>,
     pub date: Option<String>,
 }
+
+impl AudioFileTrackMetadata {
+    pub fn resolve_album_artist(&self) -> String {
+        // Use the album_artist if specified,
+        // otherwise just use the artist
+        match self.album_artist {
+            Some(ref v) => v.clone(),
+            None => self.artist.clone(),
+        }
+    }
+
+    pub fn resolve_album(&self) -> String {
+        // If there is no album specified,
+        // assume it is a single and the album
+        // can just be the track title
+        match self.album {
+            Some(ref v) => v.clone(),
+            None => self.track_title.clone(),
+        }
+    }
+
+    pub fn resolve_disc_number(&self) -> u32 {
+        // If there is no disc specified,
+        // assume that it is a single disc release
+        match self.disc_no {
+            Some(ref v) => *v,
+            None => 1,
+        }
+    }
+
+    pub fn resolve_track_number(&self) -> u32 {
+        // If there is no track number assigned,
+        // assume that it's a single with just one track
+        // as part of it's "album" of a release
+        match self.track {
+            Some(ref v) => *v,
+            None => 1,
+        }
+    }
+}
