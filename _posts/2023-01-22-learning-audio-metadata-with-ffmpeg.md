@@ -290,7 +290,10 @@ Real quick:
 * `example_song.flac`
 	* This specifies the input file to play
 
-Alright, that was a decent amount of specifications and real-world usage of `ffmpeg`. If you want to poke around with existing music files you have, hopefully you have the knowledge to know what to look for and what to make of it all. Let's wrap up and prepare for the next installment.
+## Trying FFmpeg Yourself
+
+I have a [collection of shell scripts](https://github.com/quintenpalmer/quintenpalmer.github.io/blob/main/codeexamples/2022-01-22) that you can run yourself to toy around with FFmpeg as we did here. You'll need to install `ffmpeg` either from the package manager on your system or from their [download page](https://ffmpeg.org/download.html). Enjoy!
+Alright, that was a decent amount of specifications and real-world usage of `ffmpeg`. If you want to poke around with existing music files you have, hopefully you have the knowledge to know what to look for and what to make of it all.
 
 # Conclusion
 
