@@ -6,7 +6,14 @@ use crate::model;
 pub fn parse_all_music_files(
     paths: Vec<path::PathBuf>,
 ) -> Result<Vec<model::AudioFileTrackMetadata>, model::Error> {
-    todo!("teach me to parse all files")
+    let mut all_metadata = Vec::new();
+
+    for music_file_path in paths.into_iter() {
+        let single_file_metadata = parse_single_music_file(music_file_path)?;
+        all_metadata.push(single_file_metadata);
+    }
+
+    Ok(all_metadata)
 }
 
 pub fn parse_single_music_file(
