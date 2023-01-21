@@ -29,59 +29,46 @@ pub fn parse_single_music_file(
     // Note: "artist" and "title" are the only keys we require, the rest may or may not be set
     // If one of the disc or track values are not numbers, then we will error out
     Ok(model::AudioFileTrackMetadata {
-        artist: tag_map
-            .get("artist")
-            .ok_or(model::Error::MissingMetadataKey(
-                path.to_string_lossy().to_string(),
-                "artist",
-            ))?
-            .clone(),
-        album_artist: tag_map.get("albumartist").map(|x| x.clone()),
-        album: tag_map.get("album").map(|x| x.clone()),
-        disc_no: match tag_map.get("discnumber") {
-            Some(v) => Some(v.parse::<u32>().map_err(|_| {
-                model::Error::ExpectedU32MetadataValue(
-                    path.to_string_lossy().to_string(),
-                    "discnumber",
-                )
-            })?),
-            None => None,
-        },
-        disc_total: match tag_map.get("disctotal") {
-            Some(v) => Some(v.parse::<u32>().map_err(|_| {
-                model::Error::ExpectedU32MetadataValue(
-                    path.to_string_lossy().to_string(),
-                    "disctotal",
-                )
-            })?),
-            None => None,
-        },
-        track: match tag_map.get("tracknumber") {
-            Some(v) => Some(v.parse::<u32>().map_err(|_| {
-                model::Error::ExpectedU32MetadataValue(
-                    path.to_string_lossy().to_string(),
-                    "tracknumber",
-                )
-            })?),
-            None => None,
-        },
-        track_total: match tag_map.get("tracktotal") {
-            Some(v) => Some(v.parse::<u32>().map_err(|_| {
-                model::Error::ExpectedU32MetadataValue(
-                    path.to_string_lossy().to_string(),
-                    "tracktotal",
-                )
-            })?),
-            None => None,
-        },
-        track_title: tag_map
-            .get("title")
-            .ok_or(model::Error::MissingMetadataKey(
-                path.to_string_lossy().to_string(),
-                "title",
-            ))?
-            .clone(),
-        genre: tag_map.get("genre").map(|x| x.clone()),
-        date: tag_map.get("date").map(|x| x.clone()),
+        artist: get_string_result(&tag_map, "artist", &path)?,
+        album_artist: get_string_option(&tag_map, "albumartist"),
+        album: get_string_option(&tag_map, "album"),
+        disc_no: get_u32_result(&tag_map, "discnumber", &path)?,
+        disc_total: get_u32_result(&tag_map, "disctotal", &path)?,
+        track: get_u32_result(&tag_map, "tracknumber", &path)?,
+        track_total: get_u32_result(&tag_map, "tracktotal", &path)?,
+        track_title: get_string_result(&tag_map, "title", &path)?,
+        genre: get_string_option(&tag_map, "genre"),
+        date: get_string_option(&tag_map, "date"),
+    })
+}
+
+fn get_string_option(tag_map: &BTreeMap<String, String>, key: &'static str) -> Option<String> {
+    tag_map.get(key).map(|x| x.clone())
+}
+
+fn get_string_result(
+    tag_map: &BTreeMap<String, String>,
+    key: &'static str,
+    path: &path::PathBuf,
+) -> Result<String, model::Error> {
+    Ok(tag_map
+        .get(key)
+        .ok_or(model::Error::MissingMetadataKey(
+            path.to_string_lossy().to_string(),
+            key,
+        ))?
+        .clone())
+}
+
+fn get_u32_result(
+    tag_map: &BTreeMap<String, String>,
+    key: &'static str,
+    path: &path::PathBuf,
+) -> Result<Option<u32>, model::Error> {
+    Ok(match tag_map.get(key) {
+        Some(v) => Some(v.parse::<u32>().map_err(|_| {
+            model::Error::ExpectedU32MetadataValue(path.to_string_lossy().to_string(), key)
+        })?),
+        None => None,
     })
 }
