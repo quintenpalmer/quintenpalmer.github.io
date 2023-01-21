@@ -1,5 +1,6 @@
 use std::env;
 
+mod util;
 mod parse;
 mod scan;
 mod organize;

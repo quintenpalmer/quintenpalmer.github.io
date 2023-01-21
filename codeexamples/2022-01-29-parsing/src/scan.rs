@@ -1,7 +1,7 @@
 use std::fs;
 use std::path;
 
-use crate::model;
+use crate::{model, util};
 
 pub fn find_music_files<P: AsRef<path::Path>>(
     scan_path: P,
@@ -15,7 +15,7 @@ pub fn find_music_files<P: AsRef<path::Path>>(
             metadata_map.append(&mut find_music_files(&child_path)?);
         }
         if child_entry.file_type()?.is_file() {
-            let maybe_extension = get_maybe_extension_string(&child_path);
+            let maybe_extension = util::get_maybe_extension_string(&child_path);
 
             match maybe_extension {
                 Some(extension) => match extension.as_str() {
@@ -34,11 +34,4 @@ pub fn find_music_files<P: AsRef<path::Path>>(
     }
 
     Ok(metadata_map)
-}
-
-fn get_maybe_extension_string(p: &path::PathBuf) -> Option<String> {
-    match p.extension() {
-        Some(v) => Some(v.to_str().unwrap().to_lowercase()),
-        None => None,
-    }
 }
