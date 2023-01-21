@@ -1,7 +1,16 @@
 use std::collections::BTreeMap;
+use std::io;
 
 #[derive(Debug)]
-pub enum Error {}
+pub enum Error {
+    IO(io::Error),
+}
+
+impl From<io::Error> for Error {
+    fn from(e: io::Error) -> Self {
+        Error::IO(e)
+    }
+}
 
 pub struct Library {
     pub artists: BTreeMap<String, Artist>,
