@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::path;
 
-use crate::model;
+use crate::{model, util};
 
 pub fn parse_all_music_files(
     paths: Vec<path::PathBuf>,
@@ -19,6 +19,18 @@ pub fn parse_all_music_files(
 pub fn parse_single_music_file(
     path: path::PathBuf,
 ) -> Result<model::AudioFileTrackMetadata, model::Error> {
+    let maybe_extension = util::get_maybe_extension_string(&path);
+
+    match maybe_extension {
+        Some(extension) => match extension.as_str() {
+            "flac" => parse_flac_file(path),
+            _ => panic!("unknown audio file extension"),
+        },
+        None => panic!("file without extension"),
+    }
+}
+
+pub fn parse_flac_file(path: path::PathBuf) -> Result<model::AudioFileTrackMetadata, model::Error> {
     let reader = claxon::FlacReader::open(&path)?;
 
     let tag_map = reader
