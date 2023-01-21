@@ -1,14 +1,25 @@
 use std::collections::BTreeMap;
 use std::io;
 
+use claxon;
+
 #[derive(Debug)]
 pub enum Error {
     IO(io::Error),
+    Claxon(claxon::Error),
+    MissingMetadataKey(String, &'static str),
+    ExpectedU32MetadataValue(String, &'static str),
 }
 
 impl From<io::Error> for Error {
     fn from(e: io::Error) -> Self {
         Error::IO(e)
+    }
+}
+
+impl From<claxon::Error> for Error {
+    fn from(e: claxon::Error) -> Self {
+        Error::Claxon(e)
     }
 }
 
