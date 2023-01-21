@@ -293,10 +293,11 @@ Real quick:
 ## Trying FFmpeg Yourself
 
 I have a [collection of shell scripts](https://github.com/quintenpalmer/quintenpalmer.github.io/blob/main/codeexamples/2022-01-22) that you can run yourself to toy around with FFmpeg as we did here. You'll need to install `ffmpeg` either from the package manager on your system or from their [download page](https://ffmpeg.org/download.html). Enjoy!
-Alright, that was a decent amount of specifications and real-world usage of `ffmpeg`. If you want to poke around with existing music files you have, hopefully you have the knowledge to know what to look for and what to make of it all.
 
 # Conclusion
 
-Now we all hopefully know about audio file formats and their metadata and we can be ready to leverage this in the next blog post where I'll be going over how I ingest all of this information and use it to build a data source that my application will build on top of. 
+Alright, that was a decent amount of specifications and real-world usage of `ffmpeg`. If you want to poke around with existing music files you have, hopefully you have the knowledge to know what to look for and what to make of it all.
 
-A quick sneak peak: the next post will be writing Rust code and using Rust libraries to process music files and build up a tree of what my Musiq App considers a "canonical" "library" (intentional separate scare quotes). Stay tuned!
+# Next Installment
+
+We'll be using the information laid out here as the foundation for the contents of the next blog post, where we'll use Rust and [some](https://crates.io/crates/claxon) [audio](https://crates.io/crates/id3) [libraries](https://crates.io/crates/mp3-duration) to process music files and build up a tree of what my Musiq App considers a "canonical" "library" (intentional separate scare quotes). Stay tuned!
