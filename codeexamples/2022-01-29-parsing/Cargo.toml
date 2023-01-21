@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 claxon = "0.4"
+id3 = "1.0"
