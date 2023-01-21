@@ -20,6 +20,7 @@ pub fn find_music_files<P: AsRef<path::Path>>(
             match maybe_extension {
                 Some(extension) => match extension.as_str() {
                     "flac" => metadata_map.push(child_path),
+                    "mp3" => metadata_map.push(child_path),
                     _ => println!(
                         "DEBUG: Skipping file with unknown extension: {}",
                         child_path.to_string_lossy()

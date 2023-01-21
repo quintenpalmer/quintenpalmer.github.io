@@ -23,6 +23,7 @@ pub fn parse_single_music_file(
     match maybe_extension {
         Some(extension) => match extension.as_str() {
             "flac" => flac::parse_flac_file(path),
+            "mp3" => id3::parse_mp3_file(path),
             _ => panic!("unknown audio file extension"),
         },
         None => panic!("file without extension"),
@@ -90,5 +91,45 @@ mod flac {
             })?),
             None => None,
         })
+    }
+}
+
+mod id3 {
+    use std::path;
+
+    use id3::{self, TagLike};
+
+    use crate::model;
+
+    pub fn parse_mp3_file(
+        path: path::PathBuf,
+    ) -> Result<model::AudioFileTrackMetadata, model::Error> {
+        let tag = id3::Tag::read_from_path(&path)?;
+
+        Ok(model::AudioFileTrackMetadata {
+            artist: get_string_result(tag.artist(), "artist", &path)?,
+            album_artist: tag.album_artist().map(|x| x.to_string()),
+            album: tag.album().map(|x| x.to_string()),
+            disc_no: tag.disc(),
+            disc_total: tag.total_discs(),
+            track: tag.track(),
+            track_total: tag.total_tracks(),
+            track_title: get_string_result(tag.title(), "title", &path)?,
+            genre: tag.genre().map(|x| x.to_string()),
+            date: tag.year().map(|x| x.to_string()),
+        })
+    }
+
+    fn get_string_result(
+        val: Option<&str>,
+        key: &'static str,
+        path: &path::PathBuf,
+    ) -> Result<String, model::Error> {
+        Ok(val
+            .ok_or(model::Error::MissingMetadataKey(
+                path.to_string_lossy().to_string(),
+                key,
+            ))?
+            .to_string())
     }
 }
