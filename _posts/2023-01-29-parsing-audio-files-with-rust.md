@@ -41,7 +41,7 @@ fn main() {
 }
 ```
 
-This declares 5 the modules that we'll fill in (with implements left as todo for now) and leaves the default hello world main; we'll come back to that too. the `impls` modules is public as it will define a method we would want to expose outside of this crate. Let's move next to the `model.rs` module.
+This declares 6 the modules that we'll fill in (with implementation left as todos for now) and leaves the default hello world main; we'll come back to that too. the `impls` modules is public as it will define a method we would want to expose outside of this crate. Let's move next to the `model.rs` module.
 
 ### **`model.rs`**
 ```rust
@@ -126,7 +126,7 @@ fn parse_single_audio_file(
 
 These two functions just split out the responsibility of parsing one file and then trying to parse a collection of files.
 
-`parse_all_audio_files` uses Rust's [iterators](https://doc.rust-lang.org/book/ch13-02-iterators.html) to iterate over each filename passed in and call `parse_single_audio_file` on each entry. Note that it's even able to `.collect` over a collection of `Result<_, model::Error>` and return a single `Result<Vec<_>, model::Error>` instead of the simpler collection, would be a `Vec<Result<_, model::Error>>`, as documented [here](https://doc.rust-lang.org/std/result/#collecting-into-result).
+`parse_all_audio_files` uses Rust's [iterators](https://doc.rust-lang.org/book/ch13-02-iterators.html) to iterate over each filename passed in and call `parse_single_audio_file` on each entry. Note that it's even able to `.collect()` over a collection of `Result<_, model::Error>` and return a single `Result<Vec<_>, model::Error>` instead of the simpler collection, would be a `Vec<Result<_, model::Error>>`, as documented [here](https://doc.rust-lang.org/std/result/#collecting-into-result). This transformation is still cool to me!
 
 `parse_single_audio_file` takes a single path and will parse and return the "canonical" `AudioFileTrackMetadata` if possible (the fallible nature captured in the `Result<_, model::Error>` again).
 
@@ -233,7 +233,7 @@ pub fn find_audio_files(scan_path: &path::PathBuf) -> Result<Vec<path::PathBuf>,
         let child_path = child_entry.path();
 
 		// If this entry is a directory,
-		// then recursively call this function with this child entry as the `scan_path`
+		// then recursively call this same function with this child entry as the `scan_path`
 		// and add those audio files to our return value
         if child_entry.file_type()?.is_dir() {
             audio_files.append(&mut find_audio_files(&child_path)?);
@@ -271,6 +271,9 @@ pub fn find_audio_files(scan_path: &path::PathBuf) -> Result<Vec<path::PathBuf>,
 ```
 
 Ok, that's a decent amount of code, but hopefully the inline comments help. Here is some documentation to help on top of that:
+* [`?`](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator)
+	* This is the preferred method of error propagation in Rust
+	* Note that, since we have `impl From<io::Error> for model::Error` we can automatically convert from an `io::Error` to our `model::Error` 
 * [`fs::read_dir`](https://doc.rust-lang.org/std/fs/fn.read_dir.html)
 	* This documents how it returns a `Result<fs::ReadDir, io::Error>`
 * [`impl Iterator for fs::ReadDir`](https://doc.rust-lang.org/std/fs/struct.ReadDir.html#impl-Iterator-for-ReadDir)
@@ -280,11 +283,12 @@ Ok, that's a decent amount of code, but hopefully the inline comments help. Here
 		* [`fs::DirEntry.path()`](https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.path)
 		* [`fs::DirEntry.file_type()`](https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.file_type)
 
-I'll let you poke around the rest of the documentation; the bottom line is that this function can recursively walk through a directory and find all of the `*.flac` files, which is what we want! On to the parse functions:
+I'll let you poke around the rest of the documentation; the ultimate purpose of this function is to recursively walk through a directory and find all of the `*.flac` files, which is what we want! On to the parse functions:
 
 ## Fill In the Parser
 
 ### Prepare `Cargo.toml` and `model.rs`
+
 First, we'll need to include the [`claxon`](https://docs.rs/claxon/latest/claxon/) crate, which will do the FLAC parsing for us.
 
 #### **`Cargo.toml`**
@@ -354,9 +358,11 @@ pub fn parse_single_audio_file(
         },
         None => panic!("file without extension"),
     }
-}```
+}
+```
 
-And now let's introduce the flac parsing, first with one bite-size chunk that introduces some 
+And now let's introduce the actual FLAC parsing:
+
 #### **`parse.rs`**
 ```rust
 // This module is for our flac parsing (we will have a companion module for mp3/id3 soon)
@@ -373,7 +379,7 @@ mod flac {
         let reader = claxon::FlacReader::open(&path)?;
 
 		// Claxon's reader can parse all of the tags for us,
-		// and we'll transform them into a map,
+		// and we'll transform them into a map of Strings to Strings,
 		// with the key lowercased, for simplicity of lookup
         let tag_map = reader
             .tags()
@@ -399,13 +405,13 @@ mod flac {
         })
     }
 
-	// This retrieves a string, if it is present
+	// This retrieves a String, if it is present
 	// and returns `Option::None` if not
     fn get_string_option(tag_map: &BTreeMap<String, String>, key: &'static str) -> Option<String> {
         tag_map.get(key).map(|x| x.clone())
     }
 
-	// This retrieves a string, but will fail if it is not present
+	// This retrieves a String, but will fail if it is not present
 	// The failure is through the Result::Err(...) flow
 	// The extra arguments are just for the error construction
     fn get_string_result(
@@ -440,11 +446,21 @@ mod flac {
 }
 ```
 
-You may be a bit disappointed that we didn't dig into the weeds of the flac implementation too much; the `reader.tags()` did a lot of the heavy lifting for us. If you're curious to dig into that yourself, you can find a decent starting point in the source code [here](https://github.com/ruuda/claxon/blob/20fd6a78830ec75918175b2375c21dd667b894ce/src/lib.rs#L239). I'm happy to let this library do that lifting for me, and I just get a map of strings to strings, though. Moving on, the last step here, will be organizing this library; let's give that a shot.
+A few more links to documentation:
+* [`claxon::FlacReader::new(...)`](https://docs.rs/claxon/latest/claxon/struct.FlacReader.html#method.new)
+	* This is our major entry point into `claxon`
+* [`claxon::FlacReader.tags()`](https://docs.rs/claxon/latest/claxon/struct.FlacReader.html#method.tags)
+	* This gives us the metadata tags, that we convert into the `BTreeMap<String, String>`
+
+You may be a bit disappointed that we didn't dig into the weeds of the flac implementation too much; the `reader.tags()` did a lot of the heavy lifting for us. If you're curious to dig into that yourself, you can find a decent starting point in the source code [here](https://github.com/ruuda/claxon/blob/20fd6a78830ec75918175b2375c21dd667b894ce/src/lib.rs#L239). I'm happy to let this library do that lifting for me, and I just get a map of strings to strings, though.
+
+Moving on, the last step here, will be organizing this library; let's give that a shot.
 
 ## Fill In the Organizer
 
 ### Prepare `model.rs`
+
+We've got one more error to add, and some new methods on our `AudioFileTrackMetadata`, let's see them:
 
 #### **`model.rs`**
 ```rust
@@ -550,6 +566,8 @@ impl AudioFileTrackMetadata {
 }
 ```
 
+Ok, with that all prepared, let's actually organize these tracks.
+
 ### Implementing `organize_tracks`
 
 #### **`organize.rs`**
@@ -627,6 +645,12 @@ pub fn organize_tracks(
 }
 ```
 
+A few more links to documentation:
+* [`BTreeMap.entry(...)`](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.entry)
+	* This is how we look up the values under the BTreeMap and then insert a value if we have not visited this key yet, through: [`Entry.or_insert(...)`](https://doc.rust-lang.org/std/collections/btree_map/enum.Entry.html#method.or_insert)
+* [`BTreeMap.insert(...)`](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.insert)
+	* Note that this returns the value that was present, if there was a value already present; this is how we detect conflicts
+
 ## Write a Useful `main()`
 
 Let's write a real `main()` function that uses our new logic:
@@ -700,9 +724,11 @@ Now let's print all of the tracks we found
 				Track:   3 - Outro
 ```
 
+Pretty nifty, if I do say so myself! It's nothing too impressive, but for the amount of code we wrote, it's nice to have this little tree of output to show for. Alright, wrapping up...
+
 # Conclusion
 
-Hopefully that was easy enough to follow along, and a shed a bit of light on how to wrangle audio metadata! If you're curious to read how the specs actually work, and how the libraries actually parse out the data, feel free and if you find anything cool, maybe share some of it with us all!
+Hopefully that was easy enough to follow along, and a shed a bit of light on how to wrangle audio metadata (with Rust)! If you're curious to read how the specs actually work, and how the libraries actually parse out the data, feel free to do so, and if you find anything cool, maybe share some of it with us all!
 
 # Next Installment
 
