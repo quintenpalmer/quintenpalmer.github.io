@@ -3,14 +3,14 @@ use std::path;
 
 use crate::{model, util};
 
-pub fn find_music_files(scan_path: &path::PathBuf) -> Result<Vec<path::PathBuf>, model::Error> {
+pub fn find_audio_files(scan_path: &path::PathBuf) -> Result<Vec<path::PathBuf>, model::Error> {
     let mut metadata_map = Vec::new();
 
     for child_entry in fs::read_dir(scan_path)? {
         let child_entry = child_entry?;
         let child_path = child_entry.path();
         if child_entry.file_type()?.is_dir() {
-            metadata_map.append(&mut find_music_files(&child_path)?);
+            metadata_map.append(&mut find_audio_files(&child_path)?);
         }
         if child_entry.file_type()?.is_file() {
             let maybe_extension = util::get_maybe_extension_string(&child_path);

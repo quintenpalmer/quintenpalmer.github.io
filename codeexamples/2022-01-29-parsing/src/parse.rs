@@ -2,16 +2,16 @@ use std::path;
 
 use crate::{model, util};
 
-pub fn parse_all_music_files(
+pub fn parse_all_audio_files(
     paths: Vec<path::PathBuf>,
 ) -> Result<Vec<model::AudioFileTrackMetadata>, model::Error> {
     paths
         .into_iter()
-        .map(|audio_file_path| parse_single_music_file(audio_file_path))
+        .map(|audio_file_path| parse_single_audio_file(audio_file_path))
         .collect()
 }
 
-pub fn parse_single_music_file(
+pub fn parse_single_audio_file(
     audio_file_path: path::PathBuf,
 ) -> Result<model::AudioFileTrackMetadata, model::Error> {
     let maybe_extension = util::get_maybe_extension_string(&audio_file_path);
