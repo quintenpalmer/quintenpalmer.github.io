@@ -9,6 +9,7 @@ pub fn find_audio_files(scan_path: &path::PathBuf) -> Result<Vec<path::PathBuf>,
     for child_entry in fs::read_dir(scan_path)? {
         let child_entry = child_entry?;
         let child_path = child_entry.path();
+
         if child_entry.file_type()?.is_dir() {
             audio_files.append(&mut find_audio_files(&child_path)?);
         }
