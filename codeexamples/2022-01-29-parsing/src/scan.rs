@@ -3,9 +3,7 @@ use std::path;
 
 use crate::{model, util};
 
-pub fn find_music_files<P: AsRef<path::Path>>(
-    scan_path: P,
-) -> Result<Vec<path::PathBuf>, model::Error> {
+pub fn find_music_files(scan_path: &path::PathBuf) -> Result<Vec<path::PathBuf>, model::Error> {
     let mut metadata_map = Vec::new();
 
     for child_entry in fs::read_dir(scan_path)? {
