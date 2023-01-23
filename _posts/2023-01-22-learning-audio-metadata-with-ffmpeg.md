@@ -5,7 +5,7 @@ date: 2023-01-22
 
 # Introducing the Metadata
 
-Welcome [back](2023/01/15/introducing-my-musiq-player-and-blog-series) for the first "real" installment in this blog series. Here, I want to introduce the metadata that is the centerpiece of my music player's entire experience. Once we work through the introduction here, there will be two major components of this:
+Welcome [back](/2023/01/15/introducing-my-musiq-player-and-blog-series) for the first "real" installment in this blog series. Here, I want to introduce the metadata that is the centerpiece of my music player's entire experience. Once we work through the introduction here, there will be two major components of this:
 * The specifications of the audio metadata formats that we operate on
 * What tooling exists to inspect said metadata
 
