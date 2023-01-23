@@ -37,7 +37,7 @@ mod model;
 pub mod impls;
 
 fn main() {
-	println!("Hello, world!");
+    println!("Hello, world!");
 }
 ```
 
@@ -51,35 +51,35 @@ use std::collections::BTreeMap;
 pub enum Error {}
 
 pub struct Library {
-	pub artists: BTreeMap<String, Artist>,
+    pub artists: BTreeMap<String, Artist>,
 }
 
 pub struct Artist {
-	pub name: String,
-	pub albums: BTreeMap<String, Album>,
+    pub name: String,
+    pub albums: BTreeMap<String, Album>,
 }
 
 pub struct Album {
-	pub name: String,
-	pub discs: BTreeMap<u32, Disc>,
+    pub name: String,
+    pub discs: BTreeMap<u32, Disc>,
 }
 
 pub struct Disc {
-	pub number: u32,
-	pub tracks: BTreeMap<u32, AudioFileTrackMetadata>,
+    pub number: u32,
+    pub tracks: BTreeMap<u32, AudioFileTrackMetadata>,
 }
 
 pub struct AudioFileTrackMetadata {
-	pub artist: String,
-	pub album_artist: Option<String>,
-	pub album: Option<String>,
-	pub disc_no: Option<u32>,
-	pub disc_total: Option<u32>,
-	pub track: Option<u32>,
-	pub track_total: Option<u32>,
-	pub track_title: String,
-	pub genre: Option<String>,
-	pub date: Option<String>,
+    pub artist: String,
+    pub album_artist: Option<String>,
+    pub album: Option<String>,
+    pub disc_no: Option<u32>,
+    pub disc_total: Option<u32>,
+    pub track: Option<u32>,
+    pub track_total: Option<u32>,
+    pub track_title: String,
+    pub genre: Option<String>,
+    pub date: Option<String>,
 }
 ```
 
@@ -96,7 +96,7 @@ use std::path;
 use crate::model;
 
 pub fn find_audio_files(scan_path: &path::PathBuf) -> Result<Vec<path::PathBuf>, model::Error> {
-	todo!("teach me how to find audio files")
+    todo!("teach me how to find audio files")
 }
 ```
 
@@ -120,7 +120,7 @@ pub fn parse_all_audio_files(
 fn parse_single_audio_file(
     audio_file_path: path::PathBuf,
 ) -> Result<model::AudioFileTrackMetadata, model::Error> {
-	todo!("teach me how to parse a single file")
+    todo!("teach me how to parse a single file")
 }
 ```
 
@@ -137,7 +137,7 @@ use crate::model;
 pub fn organize_tracks(
     tracks: Vec<model::AudioFileTrackMetadata>,
 ) -> Result<model::Library, model::Error> {
-	todo!("teach me how to organize tracks")
+    todo!("teach me how to organize tracks")
 }
 ```
 
@@ -192,7 +192,7 @@ Let's make it so that an `Error` can hold `io::Error` values, which may happen w
 
 #[derive(Debug)]
 pub enum Error {
-	// This is our new io error variant
+    // This is our new io error variant
     IO(io::Error),
 }
 
@@ -221,34 +221,34 @@ use std::path;
 use crate::{model, util};
 
 pub fn find_audio_files(scan_path: &path::PathBuf) -> Result<Vec<path::PathBuf>, model::Error> {
-	// Build the vec of file paths that are deemed
-	// matching audio files.
+    // Build the vec of file paths that are deemed
+    // matching audio files.
     let mut audio_files = Vec::new();
 
-	// Read all values in the directory of the passed-in PathBuf
+    // Read all values in the directory of the passed-in PathBuf
     for child_entry in fs::read_dir(scan_path)? {
-	    // The iterator is over `Result<fs::DirEntry, io::Error>` so we "try" it with the ? syntax
+        // The iterator is over `Result<fs::DirEntry, io::Error>` so we "try" it with the ? syntax
         let child_entry = child_entry?;
         // Save this value just for brevity in the future
         let child_path = child_entry.path();
 
-		// If this entry is a directory,
-		// then recursively call this same function with this child entry as the `scan_path`
-		// and add those audio files to our return value
+        // If this entry is a directory,
+        // then recursively call this same function with this child entry as the `scan_path`
+        // and add those audio files to our return value
         if child_entry.file_type()?.is_dir() {
             audio_files.append(&mut find_audio_files(&child_path)?);
         }
         // If the entry is a regular file, then let's see
         // if it's an audio file we want to process
         if child_entry.file_type()?.is_file() {
-	        // Grab the extention (if present)
+            // Grab the extention (if present)
             let maybe_extension = util::get_maybe_extension_string(&child_path);
 
             match maybe_extension {
-	            // If there is an extension, match on the string
-	            // as a &str so we can use string literals in our matches
+                // If there is an extension, match on the string
+                // as a &str so we can use string literals in our matches
                 Some(extension) => match extension.as_str() {
-	                // We're going to start with only flac files
+                    // We're going to start with only flac files
                     "flac" => audio_files.push(child_path),
                     // Debug that we're skipping a file with an extension we don't know about.
                     _ => println!(
@@ -265,7 +265,7 @@ pub fn find_audio_files(scan_path: &path::PathBuf) -> Result<Vec<path::PathBuf>,
         }
     }
 
-	// Return the files we found that we saw were "audio" files
+    // Return the files we found that we saw were "audio" files
     Ok(audio_files)
 }
 ```
@@ -309,7 +309,7 @@ use claxon;
 
 pub enum Error {
     IO(io::Error),
-	// This is our new claxon error
+    // This is our new claxon error
     Claxon(claxon::Error),
     // This will be returned if expected metadata is missing
     // This holds the path to the file and the key name 
@@ -346,13 +346,13 @@ use crate::{model, util};
 pub fn parse_single_audio_file(
     audio_file_path: path::PathBuf,
 ) -> Result<model::AudioFileTrackMetadata, model::Error> {
-	// Get the potential extension
+    // Get the potential extension
     let maybe_extension = util::get_maybe_extension_string(&audio_file_path);
 
     match maybe_extension {
         Some(extension) => match extension.as_str() {
-	        // If there is an extension, and it is a `.flac` file
-	        // Let's call into our new `flac::parse_flac_file`
+            // If there is an extension, and it is a `.flac` file
+            // Let's call into our new `flac::parse_flac_file`
             "flac" => flac::parse_flac_file(audio_file_path),
             _ => panic!("unknown audio file extension"),
         },
@@ -375,19 +375,19 @@ mod flac {
     pub fn parse_flac_file(
         path: path::PathBuf,
     ) -> Result<model::AudioFileTrackMetadata, model::Error> {
-	    // First, let's pass this known-to-be-flac file to `claxon`
+        // First, let's pass this known-to-be-flac file to `claxon`
         let reader = claxon::FlacReader::open(&path)?;
 
-		// Claxon's reader can parse all of the tags for us,
-		// and we'll transform them into a map of Strings to Strings,
-		// with the key lowercased, for simplicity of lookup
+        // Claxon's reader can parse all of the tags for us,
+        // and we'll transform them into a map of Strings to Strings,
+        // with the key lowercased, for simplicity of lookup
         let tag_map = reader
             .tags()
             .map(|(k, v)| (k.to_string().to_lowercase(), v.to_string()))
             .collect::<BTreeMap<String, String>>();
 
-		// This is where we then look up for all of the keys we hope to find
-		// We do most of the lookups into our map with three helper functions
+        // This is where we then look up for all of the keys we hope to find
+        // We do most of the lookups into our map with three helper functions
 
         // Note: "artist" and "title" are the only keys we require, the rest may or may not be set
         // If one of the disc or track values are not numbers, then we will error out
@@ -405,15 +405,15 @@ mod flac {
         })
     }
 
-	// This retrieves a String, if it is present
-	// and returns `Option::None` if not
+    // This retrieves a String, if it is present
+    // and returns `Option::None` if not
     fn get_string_option(tag_map: &BTreeMap<String, String>, key: &'static str) -> Option<String> {
         tag_map.get(key).map(|x| x.clone())
     }
 
-	// This retrieves a String, but will fail if it is not present
-	// The failure is through the Result::Err(...) flow
-	// The extra arguments are just for the error construction
+    // This retrieves a String, but will fail if it is not present
+    // The failure is through the Result::Err(...) flow
+    // The extra arguments are just for the error construction
     fn get_string_result(
         tag_map: &BTreeMap<String, String>,
         key: &'static str,
@@ -428,9 +428,9 @@ mod flac {
             .clone())
     }
 
-	// Get's a u32 value, if present
-	// but can still fail if it cannot parse the value as u32
-	// If no value is present, it will still just return `Option::None`
+    // Get's a u32 value, if present
+    // but can still fail if it cannot parse the value as u32
+    // If no value is present, it will still just return `Option::None`
     fn get_u32_optional_result(
         tag_map: &BTreeMap<String, String>,
         key: &'static str,
@@ -579,19 +579,19 @@ use crate::model;
 pub fn organize_tracks(
     tracks: Vec<model::AudioFileTrackMetadata>,
 ) -> Result<model::Library, model::Error> {
-	// Start with an empty library
+    // Start with an empty library
     let mut library = model::Library {
         artists: BTreeMap::new(),
     };
 
-	// Iterate over all tracks we've found
+    // Iterate over all tracks we've found
     for track in tracks.into_iter() {
-	    // These instances of `.entry(...).or_insert(...)` pattern are using what is called the Entry API
-	    // It looks up for a value, if it exists at the key specified as the input to `.entry(x)`
-	    // and if no value exists, will insert the value specified in `.or_insert(y)`
-	    // The final result of both calls is that you always have a value at that key and it is returned by `.or_insert(...)`
+        // These instances of `.entry(...).or_insert(...)` pattern are using what is called the Entry API
+        // It looks up for a value, if it exists at the key specified as the input to `.entry(x)`
+        // and if no value exists, will insert the value specified in `.or_insert(y)`
+        // The final result of both calls is that you always have a value at that key and it is returned by `.or_insert(...)`
 
-		// Get or insert the artist with the resolved artist name
+        // Get or insert the artist with the resolved artist name
         let artist_entry = library
             .artists
             .entry(track.resolve_album_artist())
@@ -600,7 +600,7 @@ pub fn organize_tracks(
                 albums: BTreeMap::new(),
             });
 
-		// Get or insert the album under that artist with the resolved album name
+        // Get or insert the album under that artist with the resolved album name
         let album_entry =
             artist_entry
                 .albums
@@ -610,7 +610,7 @@ pub fn organize_tracks(
                     discs: BTreeMap::new(),
                 });
 
-		// Get or insert the disc under that album with the resolved disc number
+        // Get or insert the disc under that album with the resolved disc number
         let disc_entry = album_entry
             .discs
             .entry(track.resolve_disc_number())
@@ -619,13 +619,13 @@ pub fn organize_tracks(
                 tracks: BTreeMap::new(),
             });
 
-		// Get or insert the track under that disc with the resolved track number
-		// If there exists a value here, it means we have a conflict, which we do not want to allow
+        // Get or insert the track under that disc with the resolved track number
+        // If there exists a value here, it means we have a conflict, which we do not want to allow
         let maybe_conflict = disc_entry
             .tracks
             .insert(track.resolve_track_number(), track);
 
-		// Error out with there is Some(conflict)
+        // Error out with there is Some(conflict)
         match maybe_conflict {
             Some(conflict) => {
                 return Err(model::Error::ConflictingTrack(
@@ -640,7 +640,7 @@ pub fn organize_tracks(
         };
     }
 
-	// After all of the iterating, we should have a full library with every track we passed in
+    // After all of the iterating, we should have a full library with every track we passed in
     Ok(library)
 }
 ```
@@ -681,8 +681,8 @@ fn main() {
     // if the passed directory has a library in the shape we expect
     let library = model::Library::from_library_directory(args[1].clone()).unwrap();
 
-	// Print out the artists, albums, discs, and tracks
-	// in a tab-indented tree
+    // Print out the artists, albums, discs, and tracks
+    // in a tab-indented tree
     println!("Now let's print all of the tracks we found");
     for artist in library.artists.values() {
         println!("\tArtist: {}", artist.name);
