@@ -48,10 +48,10 @@ mod flac {
             artist: get_string_result(&tag_map, "artist", &path)?,
             album_artist: get_string_option(&tag_map, "albumartist"),
             album: get_string_option(&tag_map, "album"),
-            disc_no: get_u32_result(&tag_map, "discnumber", &path)?,
-            disc_total: get_u32_result(&tag_map, "disctotal", &path)?,
-            track: get_u32_result(&tag_map, "tracknumber", &path)?,
-            track_total: get_u32_result(&tag_map, "tracktotal", &path)?,
+            disc_no: get_u32_optional_result(&tag_map, "discnumber", &path)?,
+            disc_total: get_u32_optional_result(&tag_map, "disctotal", &path)?,
+            track: get_u32_optional_result(&tag_map, "tracknumber", &path)?,
+            track_total: get_u32_optional_result(&tag_map, "tracktotal", &path)?,
             track_title: get_string_result(&tag_map, "title", &path)?,
             genre: get_string_option(&tag_map, "genre"),
             date: get_string_option(&tag_map, "date"),
@@ -76,7 +76,7 @@ mod flac {
             .clone())
     }
 
-    fn get_u32_result(
+    fn get_u32_optional_result(
         tag_map: &BTreeMap<String, String>,
         key: &'static str,
         path: &path::PathBuf,
