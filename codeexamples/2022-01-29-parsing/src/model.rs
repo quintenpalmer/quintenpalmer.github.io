@@ -11,6 +11,7 @@ pub enum Error {
     ID3(id3::Error),
     MissingMetadataKey(String, &'static str),
     ExpectedU32MetadataValue(String, &'static str),
+    ConflictingTrack(String, String, u32, u32, String),
 }
 
 impl From<io::Error> for Error {

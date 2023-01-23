@@ -35,9 +35,22 @@ pub fn organize_tracks(
                 tracks: BTreeMap::new(),
             });
 
-        disc_entry
+        let conflict = disc_entry
             .tracks
             .insert(track.resolve_track_number(), track);
+
+        match conflict {
+            Some(c) => {
+                return Err(model::Error::ConflictingTrack(
+                    c.resolve_album_artist(),
+                    c.resolve_album(),
+                    c.resolve_disc_number(),
+                    c.resolve_track_number(),
+                    c.track_title,
+                ))
+            }
+            None => (),
+        };
     }
 
     Ok(library)
