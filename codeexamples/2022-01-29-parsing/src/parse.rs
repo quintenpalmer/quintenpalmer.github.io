@@ -7,19 +7,19 @@ pub fn parse_all_music_files(
 ) -> Result<Vec<model::AudioFileTrackMetadata>, model::Error> {
     paths
         .into_iter()
-        .map(|music_file_path| parse_single_music_file(music_file_path))
+        .map(|audio_file_path| parse_single_music_file(audio_file_path))
         .collect()
 }
 
 pub fn parse_single_music_file(
-    path: path::PathBuf,
+    audio_file_path: path::PathBuf,
 ) -> Result<model::AudioFileTrackMetadata, model::Error> {
-    let maybe_extension = util::get_maybe_extension_string(&path);
+    let maybe_extension = util::get_maybe_extension_string(&audio_file_path);
 
     match maybe_extension {
         Some(extension) => match extension.as_str() {
-            "flac" => flac::parse_flac_file(path),
-            "mp3" => id3::parse_mp3_file(path),
+            "flac" => flac::parse_flac_file(audio_file_path),
+            "mp3" => id3::parse_mp3_file(audio_file_path),
             _ => panic!("unknown audio file extension"),
         },
         None => panic!("file without extension"),
