@@ -300,4 +300,4 @@ Alright, that was a decent amount of specifications and real-world usage of `ffm
 
 # Next Installment
 
-We'll be using the information laid out here as the foundation for the contents of the next blog post, where we'll use Rust and [some](https://crates.io/crates/claxon) [audio](https://crates.io/crates/id3) [libraries](https://crates.io/crates/mp3-duration) to process music files and build up a tree of what my Musiq App considers a "canonical" "library" (intentional separate scare quotes). Stay tuned!
+We'll be using the information laid out here as the foundation for the contents of the next blog post, where we'll use Rust and some [audio](https://crates.io/crates/claxon) [libraries](https://crates.io/crates/id3)  to process music files and build up a tree of what my Musiq App considers a "canonical" "library" (intentional separate scare quotes). Stay tuned!
