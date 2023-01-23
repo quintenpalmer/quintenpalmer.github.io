@@ -78,7 +78,7 @@ The `.mp3` audio file format uses the audio coding format of the same name: MP3.
 
 ### FLAC
 
-The `.flac` audio file format also uses an audio coding format of its same name: FLAC. The FLAC file format also has support for metadata built into its spec, which we (and the industry in general) leverage.
+The `.flac` audio file format also uses an audio coding format of its same name: FLAC. The FLAC format also has support for metadata built into its spec, which we (and the industry in general) leverage.
 
 # Specifics of Each Audio Format Metadata
 
@@ -89,7 +89,7 @@ Let's dig into the specifics of the metadata tagging used with each audio format
 	* Plain english description of what this value represents
 * FFmpeg Canonical Key
 	* We will treat these as the canonical frame key names
-	* These are what FFmpeg uses across most formats instead of the specific names for each format
+	* These are what FFmpeg uses as the key names across most formats instead of the specific names for each format
 		* (We'll get into FFmpeg soon, one of these sections had to be first before we dug into the other, sorry)
 
 ## ID3 (MP3)
@@ -120,15 +120,15 @@ The FLAC specification does not define the metadata field names to use (see sect
 | `artist` | Track Artist | `artist` |
 | `albumartist` | Album Artist | `album_artist` |
 | `album` | Album Name | `album` |
-| `discnumber` | Disc Number (first half of format `1/2`) | `disc` |
-| `totaldiscs`\* | Disc Total (second half of format `1/2`) | `disctotal` |
-| `tracknumber` | Track Number (first half of format `1/10`) | `track` |
-| `totaltracks`\* | Track Total (second half of format `1/10`) | `tracktotal` |
+| `discnumber` | Disc Number | `disc` |
+| `totaldiscs`\* | Disc Total | `disctotal` |
+| `tracknumber` | Track Number | `track` |
+| `totaltracks`\* | Track Total | `tracktotal` |
 | `title` | Track Title | `title` |
 | `date` | Year of Release | `date` |
 | `genre` | Song Genre | `genre` |
 
-\* I have not seen `totaldiscs` nor `totaltracks` tagged in any music I've purchased, but I do see `disctotal` in 98% of tracks with a `discnumber` tagged (not all distrobutions seem to tag a `discnumber` if there is only one disc) and `tracktotal` in >50% of my total tracks.
+\* I have not seen `totaldiscs` nor `totaltracks` tagged in any music I've purchased, but I do see `disctotal` in 98% of tracks with a `discnumber` tagged (not all distributions seem to tag even the `discnumber` if there is only one disc) and `tracktotal` in >50% of my total tracks.
 
 With all of this in mind, let's try to get some rubber on some road and use a real tool that will inspect real files, using `ffmpeg`.
 
@@ -156,11 +156,12 @@ This is the real powerhouse that does the data transformation. The most common u
 * A source of input (often a file)
 * A list of transformations to perform
 * A source to output to (also, often a file)
+
 We'll do some examples very soon for what kinds of transfomations you can do.
 
 ### `ffprobe`
 
-This tool inspects an input file and prints out the information about it in human or machine readable formats. We will be using this tool to show the metadata of files we have either produced ourselves, or have downloaded otherwise.
+This tool inspects an input file and prints out the information about it in human or machine readable formats. We will be using this tool to show the metadata of files we have produced.
 
 ### `ffplay`
 
@@ -221,7 +222,7 @@ Input #0, flac, from 'example_song.flac':
     disc            : 1
     DISCTOTAL       : 2
     track           : 1
-    TRACKTOTAL     : 14
+    TRACKTOTAL      : 14
     TITLE           : Wonderful Time
     DATE            : 2009
     GENRE           : Dance Pop
@@ -248,8 +249,7 @@ Most people using `ffmpeg` use it to operate on existing data, so let's try that
 
 ```bash
 mv example_song.flac old_example_song.flac
-```
-```bash
+
 ffmpeg \
 	-i old_example_song.flac \
 	-c copy \
