@@ -23,7 +23,7 @@ Let's start with the simplest possible Rust project:
 cargo init --simpleaudioparser
 ```
 
-And then let's add a skeleton of our module structure. This may look like a scary amount of code, but it's mostly just layout out type signatures, that we'll explain along the way.
+And then let's add a skeleton of our module structure. This may look like a scary amount of code, but it's mostly just laying out type signatures, that we'll explain along the way.
 
 The files we will start with will be:
 
@@ -85,7 +85,7 @@ pub struct AudioFileTrackMetadata {
 
 The `Error` enum will be filled in as we introduce error cases we wish to capture.
 
-More usefully, this defines a structure of a `Library` which has a collection of `Artists` entries, each with a collection of `Album` entries, then with a collection of `Disc` values, each with a collection of these `AudioFileTrackMetadata` values.
+More usefully, this defines a structure of a `Library` which has a collection of `Artist` entries, each with a collection of `Album` entries, then with a collection of `Disc` values, each with a collection of these `AudioFileTrackMetadata` values.
 
 Note in the `AudioFileTrackMetadata` that the only values that are not `Option`-al are the `artist` and `track_title`. We will only ever assume that those values will be present, and the rest can be empty, and we'll just assign the `Option::None` when there is no value present.
 
@@ -272,7 +272,7 @@ pub fn find_audio_files(scan_path: &path::PathBuf) -> Result<Vec<path::PathBuf>,
 
 Ok, that's a decent amount of code, but hopefully the inline comments help. Here is some documentation to help on top of that:
 * [`?`](https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator)
-	* This is the preferred method of error propagation in Rust
+	* The ? operator is the preferred method of error propagation in Rust
 	* Note that, since we have `impl From<io::Error> for model::Error` we can automatically convert from an `io::Error` to our `model::Error` 
 * [`fs::read_dir`](https://doc.rust-lang.org/std/fs/fn.read_dir.html)
 	* This documents how it returns a `Result<fs::ReadDir, io::Error>`
