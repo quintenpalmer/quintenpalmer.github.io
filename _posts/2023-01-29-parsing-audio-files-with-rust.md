@@ -724,7 +724,15 @@ Now let's print all of the tracks we found
 				Track:   3 - Outro
 ```
 
-Pretty nifty, if I do say so myself! It's nothing too impressive, but for the amount of code we wrote, it's nice to have this little tree of output to show for. Alright, wrapping up...
+Pretty nifty, if I do say so myself! It's nothing too impressive, but for the amount of code we wrote, it's nice to have this little tree of output to show for. If you want to run this yourself...
+
+# Working Example
+
+I have a working example of all of this code [here](https://github.com/quintenpalmer/quintenpalmer.github.io/tree/main/codeexamples/2022-01-29-parsing) if you want to run it yourself, or just see it all in one place.
+
+If you want some sample files to run on, you can `sh generate_flac_library.sh` in that directory and it will generate a few `.flac` files that you can then pass to the rust binary with `cargo run -- path_to_music/`.
+
+Also, you may notice the linked code has support for [`.mp3`](https://en.wikipedia.org/wiki/MP3) files as well with the [`id3`](https://docs.rs/id3/latest/id3/) crate, if you want to try adding support for [`.m4a`](https://en.wikipedia.org/wiki/MP4_file_format) with [mp4ameta](https://docs.rs/mp4ameta/latest/mp4ameta/) or [`.ogg`](https://en.wikipedia.org/wiki/Ogg) (with [ogg](https://docs.rs/ogg/latest/ogg/) and [lewton](https://docs.rs/lewton/0.10.2/lewton/)), those should be good starting points.
 
 # Conclusion
 
