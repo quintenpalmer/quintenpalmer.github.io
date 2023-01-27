@@ -7,11 +7,11 @@ date: 2023-01-29
 
 ## Audio Metadata
 
-This is a follow-up to my [previous blog post](2023/01/22/learning-audio-metadata-with-ffmpeg) establishing the schema and structure of audio file metadata. If you already know all about that, let's get started! But if not, that is probably worth a read (or at least browsing the pretty code blocks) before starting in on this post.
+This is a follow-up to my [previous blog post](2023/01/22/learning-audio-metadata-with-ffmpeg) establishing the schema and structure of audio file metadata. If you already know all about that, you're ready to go! But if not, that is probably worth a read (or at least browsing the pretty code blocks) before starting in on this post.
 
 ## Rust
 
-Going forward, most of the content will be about my MusiqApp project, written in [Rust](https://www.rust-lang.org). I'll introduce some bacics of Rust in the beginning, but I'll leave learning Rust well enough to follow along as homework for you, the reader.
+Going forward, most of the content will be about my MusiqApp project, written in [Rust](https://www.rust-lang.org). If you want to fully understand the mechanisms of what's going on, you will probably want to know Rust, but if you want to treat it as a pseudo-code, it should mostly be legible as such. Ok, with those established, let's get into it!
 
 # Let's Write Some Rust!
 
@@ -20,7 +20,34 @@ Going forward, most of the content will be about my MusiqApp project, written in
 Let's start with the simplest possible Rust project:
 
 ```bash
-cargo init --simpleaudioparser
+cargo init --name simpleaudioparser
+```
+
+which leaves us with:
+
+```bash
+ $ tree
+.
+├── Cargo.toml
+└── src
+    └── main.rs
+
+2 directories, 2 files
+
+ $ cat Cargo.toml
+[package]
+name = "simpleaudioparser"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+ $ cat src/main.rs
+fn main() {
+    println!("Hello, world!");
+}
 ```
 
 And then let's add a skeleton of our module structure. This may look like a scary amount of code, but it's mostly just laying out type signatures, that we'll explain along the way.
@@ -33,7 +60,7 @@ mod util;
 mod parse;
 mod scan;
 mod organize;
-mod model;
+pub mod model;
 pub mod impls;
 
 fn main() {
@@ -41,7 +68,7 @@ fn main() {
 }
 ```
 
-This declares 6 the modules that we'll fill in (with implementation left as todos for now) and leaves the default hello world main; we'll come back to that too. the `impls` modules is public as it will define a method we would want to expose outside of this crate. Let's move next to the `model.rs` module.
+This declares 6 the modules that we'll fill in (with implementation left as todos for now) and leaves the default hello world main; we'll come back to that too. The `model` and `impls` modules are public as they will define the structure and methods we would want to expose outside of this crate. Let's move next to the `model.rs` module.
 
 ### **`model.rs`**
 ```rust
@@ -128,7 +155,7 @@ These two functions just split out the responsibility of parsing one file and th
 
 `parse_all_audio_files` uses Rust's [iterators](https://doc.rust-lang.org/book/ch13-02-iterators.html) to iterate over each filename passed in and call `parse_single_audio_file` on each entry. Note that it's even able to `.collect()` over a collection of `Result<_, model::Error>` and return a single `Result<Vec<_>, model::Error>` instead of the simpler collection, would be a `Vec<Result<_, model::Error>>`, as documented [here](https://doc.rust-lang.org/std/result/#collecting-into-result). This transformation is still cool to me!
 
-`parse_single_audio_file` takes a single path and will parse and return the "canonical" `AudioFileTrackMetadata` if possible (the fallible nature captured in the `Result<_, model::Error>` again).
+`parse_single_audio_file` takes a single path and will parse and return the "canonical" `AudioFileTrackMetadata` for this file, if possible (the fallible nature captured in the `Result<_, model::Error>` again).
 
 ### **`organize.rs`**
 ```rust
@@ -141,7 +168,7 @@ pub fn organize_tracks(
 }
 ```
 
-This function will take a list of `AudioFileTrackMetadata` values and try to organize them into a `Library` (again, again, returning the `model::Error` if it fails for any reason).
+This function will take a list of `AudioFileTrackMetadata` values and try to organize them into a `Library` (again, again, returning the `model::Error` if it fails for any reason). Note that we're done dealing with the actual files and just operate on the canonical `model::AudioFileTrackMetadata` now.
 
 ### **`impls.rs`**
 ```rust
@@ -164,7 +191,7 @@ impl model::Library {
 }
 ```
 
-I'm introducing this method/function fully fleshed out, as it really just calls the other three main functions and gives a nice API to our modules with `model::Library::from_library_directory`. And one last module, just a simple `util`:
+I'm introducing this method/function fully fleshed out, as it really just calls the other three main functions and gives a nice API to our modules with `model::Library::from_library_directory`. And just one last module, a simple `util`:
 
 ### **`util.rs`**
 ```rust
@@ -176,11 +203,11 @@ pub fn get_maybe_extension_string(p: &path::PathBuf) -> Option<String> {
 }
 ```
 
-This takes a reference to a `path::PathBuf` and returns a lowercase representation of the extension, if it exists. We'll use it soon, I promise!
+This takes a reference to a `path::PathBuf` and returns a lowercase representation of the extension, if it exists. We'll use it soon as we start to fill in the bodies of these functions. Speaking of which, let's start doing so, first with the `scan::find_audio_files` function:
 
 ## Fill In the Scan
 
-Let's start with the least audio-file-specific, the scan.
+Let's start filling in the implementation of the least audio-file-specific, the scan.
 
 ### Prepare `model::Error`
 
@@ -283,7 +310,7 @@ Ok, that's a decent amount of code, but hopefully the inline comments help. Here
 		* [`fs::DirEntry.path()`](https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.path)
 		* [`fs::DirEntry.file_type()`](https://doc.rust-lang.org/std/fs/struct.DirEntry.html#method.file_type)
 
-I'll let you poke around the rest of the documentation; the ultimate purpose of this function is to recursively walk through a directory and find all of the `*.flac` files, which is what we want! On to the parse functions:
+I'll let you poke around the rest of the documentation. The ultimate purpose of this function is to recursively walk through a directory and find all of the `*.flac` files, which is what we want! On to the parse functions:
 
 ## Fill In the Parser
 
@@ -365,7 +392,7 @@ And now let's introduce the actual FLAC parsing:
 
 #### **`parse.rs`**
 ```rust
-// This module is for our flac parsing (we will have a companion module for mp3/id3 soon)
+// This module is for our flac parsing (we could add parsers for other file types in the future)
 mod flac {
     use std::collections::BTreeMap;
     use std::path;
