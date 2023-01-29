@@ -7,7 +7,7 @@ date: 2023-01-29
 
 ## Audio Metadata
 
-This is a follow-up to my [previous blog post](2023/01/22/learning-audio-metadata-with-ffmpeg) establishing the schema and structure of audio file metadata. If you already know all about that, you're ready to go! But if not, that is probably worth a read (or at least a skim) before starting in on this post.
+This is a follow-up to my [previous blog post](/2023/01/22/learning-audio-metadata-with-ffmpeg) establishing the schema and structure of audio file metadata. If you already know all about that, you're ready to go! But if not, that is probably worth a read (or at least a skim) before starting in on this post.
 
 ## Rust
 
