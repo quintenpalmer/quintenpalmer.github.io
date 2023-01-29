@@ -7,11 +7,11 @@ date: 2023-01-29
 
 ## Audio Metadata
 
-This is a follow-up to my [previous blog post](2023/01/22/learning-audio-metadata-with-ffmpeg) establishing the schema and structure of audio file metadata. If you already know all about that, you're ready to go! But if not, that is probably worth a read (or at least browsing the pretty code blocks) before starting in on this post.
+This is a follow-up to my [previous blog post](2023/01/22/learning-audio-metadata-with-ffmpeg) establishing the schema and structure of audio file metadata. If you already know all about that, you're ready to go! But if not, that is probably worth a read (or at least a skim) before starting in on this post.
 
 ## Rust
 
-Going forward, most of the content will be about my MusiqApp project, written in [Rust](https://www.rust-lang.org). If you want to fully understand the mechanisms of what's going on, you will probably want to know Rust, but if you want to treat it as a pseudo-code, it should mostly be legible as such. Ok, with those established, let's get into it!
+Going forward, most of the content will be about my MusiqApp project, written in [Rust](https://www.rust-lang.org). If you want to fully understand the mechanisms of what's going on, you will probably want to know Rust, but if you want to treat it as a sort of pseudo-code, it should mostly be legible as that. Ok, with those established, let's get into it!
 
 # Let's Write Some Rust!
 
@@ -191,7 +191,7 @@ impl model::Library {
 }
 ```
 
-I'm introducing this method/function fully fleshed out, as it really just calls the other three main functions and gives a nice API to our modules with `model::Library::from_library_directory`. And just one last module, a simple `util`:
+I'm introducing this method/function fully fleshed out, as it really just calls the other three main functions and gives a nice API to our modules with `model::Library::from_library_directory(...)`. And just one last module, a simple `util`:
 
 ### **`util.rs`**
 ```rust
@@ -203,7 +203,7 @@ pub fn get_maybe_extension_string(p: &path::PathBuf) -> Option<String> {
 }
 ```
 
-This takes a reference to a `path::PathBuf` and returns a lowercase representation of the extension, if it exists. We'll use it soon as we start to fill in the bodies of these functions. Speaking of which, let's start doing so, first with the `scan::find_audio_files` function:
+This takes a reference to a `path::PathBuf` and returns a lowercase representation of the extension, if it exists. We'll use it soon as we start to fill in the bodies of these functions. Speaking of which, let's start doing so, first with the `scan::find_audio_files` function.
 
 ## Fill In the Scan
 
@@ -678,6 +678,8 @@ A few more links to documentation:
 * [`BTreeMap.insert(...)`](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html#method.insert)
 	* Note that this returns the value that was present, if there was a value already present; this is how we detect conflicts
 
+Now that these functions are all filled in, let's actually put them to use and see them in action!
+
 ## Write a Useful `main()`
 
 Let's write a real `main()` function that uses our new logic:
@@ -759,7 +761,7 @@ I have a working example of all of this code [here](https://github.com/quintenpa
 
 If you want some sample files to run on, you can `sh generate_flac_library.sh` in that directory and it will generate a few `.flac` files that you can then pass to the rust binary with `cargo run -- path_to_music/`.
 
-Also, you may notice the linked code has support for [`.mp3`](https://en.wikipedia.org/wiki/MP3) files as well with the [`id3`](https://docs.rs/id3/latest/id3/) crate, if you want to try adding support for [`.m4a`](https://en.wikipedia.org/wiki/MP4_file_format) with [mp4ameta](https://docs.rs/mp4ameta/latest/mp4ameta/) or [`.ogg`](https://en.wikipedia.org/wiki/Ogg) (with [ogg](https://docs.rs/ogg/latest/ogg/) and [lewton](https://docs.rs/lewton/0.10.2/lewton/)), those should be good starting points.
+Also, you may notice the linked code has support for [`.mp3`](https://en.wikipedia.org/wiki/MP3) files as well with the [`id3`](https://docs.rs/id3/latest/id3/) crate, if you want to try adding support for [`.m4a`](https://en.wikipedia.org/wiki/MP4_file_format) with [mp4ameta](https://docs.rs/mp4ameta/latest/mp4ameta/) or [`.ogg`](https://en.wikipedia.org/wiki/Ogg) with [ogg](https://docs.rs/ogg/latest/ogg/) and [lewton](https://docs.rs/lewton/0.10.2/lewton/), those should be good starting points.
 
 # Conclusion
 
