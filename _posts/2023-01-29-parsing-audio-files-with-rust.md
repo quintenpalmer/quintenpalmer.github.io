@@ -757,7 +757,7 @@ Pretty nifty, if I do say so myself! It's nothing too impressive, but for the am
 
 # Working Example
 
-I have a working example of all of this code [here](https://github.com/quintenpalmer/quintenpalmer.github.io/tree/main/codeexamples/2022-01-29-parsing) if you want to run it yourself, or just see it all in one place.
+I have a working example of all of this code [here](https://github.com/quintenpalmer/quintenpalmer.github.io/tree/main/codeexamples/2023-01-29-parsing) if you want to run it yourself, or just see it all in one place.
 
 If you want some sample files to run on, you can `sh generate_flac_library.sh` in that directory and it will generate a few `.flac` files that you can then pass to the rust binary with `cargo run -- path_to_music/`.
 
