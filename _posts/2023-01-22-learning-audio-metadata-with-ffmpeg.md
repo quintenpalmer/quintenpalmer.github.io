@@ -24,16 +24,16 @@ A simple way to think of the metadata we will be working with here is as a map o
 
 ```JSON
 {
-	"artist": "The Cool Band",
-	"album_artist": "The Cool Band",
-	"album": "Fun Songs for Dancing",
-	"disc": "1",
-	"disctotal": "1",
-	"track": "1",
-	"tracktotal": "14",
-	"title": "Wonderful Time",
-	"date": "2009",
-	"genre": "Dance Pop"
+    "artist": "The Cool Band",
+    "album_artist": "The Cool Band",
+    "album": "Fun Songs for Dancing",
+    "disc": "1",
+    "disctotal": "1",
+    "track": "1",
+    "tracktotal": "14",
+    "title": "Wonderful Time",
+    "date": "2009",
+    "genre": "Dance Pop"
 }
 ```
 
@@ -181,8 +181,8 @@ Let's start by creating a few (very boring) file using `ffmpeg` and I'll discuss
 
 ```bash
 ffmpeg \
-	-f lavfi \
-	-i "sine=frequency=220:duration=4" \
+    -f lavfi \
+    -i "sine=frequency=220:duration=4" \
     -metadata ARTIST="The Cool Band" \
     -metadata ALBUM_ARTIST="The Cool Band" \
     -metadata ALBUM="Funky Songs for Dancing" \
@@ -251,10 +251,10 @@ Most people using `ffmpeg` use it to operate on existing data, so let's try that
 mv example_song.flac old_example_song.flac
 
 ffmpeg \
-	-i old_example_song.flac \
-	-c copy \
-	-metadata "ALBUM=Fun Songs for Dancing" \
-	example_song.flac
+    -i old_example_song.flac \
+    -c copy \
+    -metadata "ALBUM=Fun Songs for Dancing" \
+    example_song.flac
 ```
 
 Let's talk through this, piece by piece, again:
