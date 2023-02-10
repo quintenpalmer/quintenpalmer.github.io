@@ -1,7 +1,7 @@
 use std::env;
 
 pub mod impls;
-mod model;
+pub mod model;
 mod organize;
 mod parse;
 mod scan;
