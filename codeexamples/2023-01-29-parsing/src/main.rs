@@ -1,11 +1,11 @@
 use std::env;
 
-mod util;
+pub mod impls;
+mod model;
+mod organize;
 mod parse;
 mod scan;
-mod organize;
-mod model;
-pub mod impls;
+mod util;
 
 fn main() {
     println!("Let's read some audio metadata");
@@ -22,7 +22,11 @@ fn main() {
             for disc in album.discs.values() {
                 println!("\t\t\tDisc: {}", disc.number);
                 for track in disc.tracks.values() {
-                    println!("\t\t\t\tTrack: {: >3} - {}", track.resolve_track_number(), track.track_title);
+                    println!(
+                        "\t\t\t\tTrack: {: >3} - {}",
+                        track.resolve_track_number(),
+                        track.track_title
+                    );
                 }
             }
         }
