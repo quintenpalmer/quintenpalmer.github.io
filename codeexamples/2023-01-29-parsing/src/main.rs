@@ -1,18 +1,12 @@
 use std::env;
 
-pub mod impls;
-pub mod model;
-mod organize;
-mod parse;
-mod scan;
-mod util;
-
 fn main() {
     println!("Let's read some audio metadata");
     let args: Vec<String> = env::args().collect();
 
     println!("Let's build the library by parsing all of the files");
-    let library = model::Library::from_library_directory(args[1].clone()).unwrap();
+    let library =
+        simpleaudioparser::model::Library::from_library_directory(args[1].clone()).unwrap();
 
     println!("Now let's print all of the tracks we found");
     for artist in library.artists.values() {
