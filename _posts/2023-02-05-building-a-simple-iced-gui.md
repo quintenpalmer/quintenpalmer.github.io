@@ -619,31 +619,12 @@ Ok! Ok! Now we have an app we can actually run and can do relatively uesful thin
 
 ## Running Our GUI
 
-With a simple `cargo run` we can see what this GUI looks like! Here is an animated gif of it, and I'll have screenshots of each page at the bottom of this whole post.
+With a simple `cargo run` we can see what this GUI looks like! Here is an animated gif of it:
 
 ![Animated gif of Music GUI](/assets/2023-02-05/music_gui/music_gui_animated.gif)
+
+And if you [click here](/2023/02/05/extra-music-gui-screenshots) you can see all screenshots laid out and annotated.
 
 # Conclusion
 
 Hopefully this (relatively) simple app gives you an idea of what to expect with my real Musiq app that I will soon reveal to the world. This post definitely felt like more of a code-dump than I was expecting; sorry if it was either too dense or too dry. Stay tuned for the next post, where I think I'm planning to show audio playback.
-
-# Screenshots
-
-![Screenshot of Home.png](/assets/2023-02-05/music_gui/01_home.png)
-![Screenshot of Home Clicking Artist List](/assets/2023-02-05/music_gui/02_home_clicking_artist_list.png)
-![Screenshot of Artist List](/assets/2023-02-05/music_gui/03_artist_list.png)
-![Screenshot of Artist List Clicking Rockers](/assets/2023-02-05/music_gui/04_artist_list_clicking_rockers.png)
-![Screenshot of Artist Rockers](/assets/2023-02-05/music_gui/05_artist_rockers.png)
-![Screenshot of Artist Rockers Clicking Party](/assets/2023-02-05/music_gui/06_artist_rockers_clicking_party.png)
-![Screenshot of Album Party Time](/assets/2023-02-05/music_gui/07_album_party_time.png)
-![Screenshot of Album Party Time Clicking Rockers](/assets/2023-02-05/music_gui/08_album_party_time_clicking_rockers.png)
-![Screenshot of Artist Rockers](/assets/2023-02-05/music_gui/09_artist_rockers.png)
-![Screenshot of Artist Rockers Clicking Making](/assets/2023-02-05/music_gui/10_artist_rockers_clicking_making.png)
-![Screenshot of Album Making a Point](/assets/2023-02-05/music_gui/11_album_making_a_point.png)
-![Screenshot of Album Making a Point Clicking Artists](/assets/2023-02-05/music_gui/12_album_making_a_point_clicking_artists.png)
-![Screenshot of Artist List](/assets/2023-02-05/music_gui/13_artist_list.png)
-![Screenshot of Artist List Clicking Chillest](/assets/2023-02-05/music_gui/14_artist_list_clicking_chillest.png)
-![Screenshot of Artist Chillest](/assets/2023-02-05/music_gui/15_artist_chillest.png)
-![Screenshot of Artist Chillest Clicking Songs](/assets/2023-02-05/music_gui/16_artist_chillest_clicking_songs.png)
-![Screenshot of Album Songs to Dream to](/assets/2023-02-05/music_gui/17_album_songs_to_dream_to.png)
-![Screenshot of Album Songs to Dream to Clicking Home](/assets/2023-02-05/music_gui/18_album_songs_to_dream_to_clicking_home.png)
