@@ -320,7 +320,7 @@ pub fn view_state<'a>(state: &'a state::State) -> iced::Element<'a, message::Mes
 }
 ```
 
-And gluing this together, the implementation of Iced's `Sandbox` trait:
+And gluing this together, the implementation of Iced's [`Sandbox`](https://docs.rs/iced/0.7.0/iced/trait.Sandbox.html) trait:
 
 ### **`src/gui/impls.rs`**
 ```rust
@@ -362,7 +362,9 @@ impl iced::Sandbox for state::State {
 }
 ```
 
-And our app would technicall run now! Let's fill in the view logic and then take a look at what we get:
+And our app would technicall run now! See the ["Hello World"](https://docs.rs/iced/0.7.0/iced/trait.Sandbox.html#a-simple-hello-world) for the Iced `Sandbox` trait for an even simpler satisfaction of this trait.
+
+It would admittedly look very boring as our view is always the same TODO text, so let's fill in the view logic and then take a look at what we get:
 
 ### **`src/gui/view/mod.rs`**
 ```rust
