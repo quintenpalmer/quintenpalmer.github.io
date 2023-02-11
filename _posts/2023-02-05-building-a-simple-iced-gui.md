@@ -5,7 +5,7 @@ date: 2023-02-05
 
 # Welcome (Back)
 
-Hello, I'm writing a series of tech blogs this year and this is the 4th installment of that [series]() [of]() [blogs](). You don't need to read those first, but you are definitely welcome to (either before or circling back after).
+Hello, I'm writing a series of tech blogs this year and this is the 4th installment of that [series](/2023/01/15/introducing-my-musiq-player-and-blog-series) [of](/2023/01/22/learning-audio-metadata-with-ffmpeg) [blogs](/2023/01/29/parsing-audio-files-with-rust). You don't need to read them all first, but you are definitely welcome to (either before or circling back after). I would recommend the [parsing audio files with rust](/2023/01/29/parsing-audio-files-with-rust) post just to get an idea of the shape of the data our "datastore" layer provides. I will not be explaining that heavily in this post; if you're ok just trusting the shape of that data to make sense, you can probably skip all previous posts.
 
 In this post we are going to build a simple [Iced](https://docs.rs/iced/latest/iced) application to get a rudimentary view of a music library (by library we mean collection of songs, just to be clear). Not too much to introduce this time; let's dig in!
 
