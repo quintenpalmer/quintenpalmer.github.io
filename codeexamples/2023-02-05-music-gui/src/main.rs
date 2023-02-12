@@ -1,4 +1,4 @@
-pub use simpleaudioparser as datastore;
+use simpleaudioparser as datastore;
 
 mod gui;
 

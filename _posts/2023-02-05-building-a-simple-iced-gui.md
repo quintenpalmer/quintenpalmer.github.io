@@ -178,7 +178,7 @@ Let's start with the `src/main.rs` and work through these files to build a worki
 ```rust
 // We'll be treating the `simpleaudioparser` as a datastore
 // so this is just a "rename" to let us refer to it as `datastore` in this crate
-pub use simpleaudioparser as datastore;
+use simpleaudioparser as datastore;
 
 // This is just a module to hold all of our gui logic (which is all of the logic, but just to make it extra clear)
 mod gui;
@@ -190,7 +190,7 @@ fn main() {
 
 ```
 
-Pretty simple `main.rs` at this point, the only fancy thing is the `pub use`; more documentation can be found [here](https://doc.rust-lang.org/reference/items/use-declarations.html#use-visibility). `src/gui/mod.rs` is next, which will also be pretty boring:
+Pretty simple `main.rs` at this point, the only fancy thing is the `use $externalcrate as newname`; more documentation can be found [here](https://doc.rust-lang.org/reference/items/use-declarations.html#use-visibility). `src/gui/mod.rs` is next, which will also be pretty boring:
 
 ### **`src/gui/mod.rs`**
 ```rust
