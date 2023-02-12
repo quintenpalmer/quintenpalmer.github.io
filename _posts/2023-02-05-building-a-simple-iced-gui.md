@@ -635,4 +635,4 @@ And if you [click here](/2023/02/05/extra-music-gui-screenshots) you can see all
 
 # Conclusion
 
-Hopefully this (relatively) simple app gives you an idea of what to expect with my real Musiq app that I will soon reveal to the world. This post definitely felt like more of a code-dump than I was expecting; sorry if it was either too dense or too dry. Stay tuned for the next post, where I think I'm planning to show audio playback.
+Hopefully this (relatively) simple app gives you an idea of what to expect with my real Musiq app that I will soon reveal to the world. This post definitely felt like more of a code-dump than I was expecting; sorry if it was either too dense or too dry. Stay tuned for the next few posts, where I think I'm planning to show audio playback, then and [MPRIS](https://specifications.freedesktop.org/mpris-spec/latest/), possible in back-to-back weeks.
