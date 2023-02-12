@@ -9,13 +9,11 @@ Hello, I'm writing a series of tech blogs this year and this is the 4th installm
 
 In this post we are going to build a simple [Iced](https://docs.rs/iced/latest/iced) application to get a rudimentary view of a music library (by library we mean collection of songs, just to be clear). Not too much to introduce this time; let's dig in!
 
-# Building Our Iced GUI
-
-## Introducing Iced
+# Introducing Iced
 
 Before we dive into writing this app, let's get a taste of how Iced works and what it provides. Feel free to read through Iced's [Overview](https://docs.rs/iced/0.7.0/iced/index.html#overview) before or after reading my summary.
 
-### In Iced's Own Words
+## In Iced's Own Words
 
 Starting with a quote from Iced's aforementioned [Overview](https://docs.rs/iced/0.7.0/iced/index.html#overview):
 
@@ -25,7 +23,7 @@ Inspired by [The Elm Architecture](https://guide.elm-lang.org/architecture/), I
 -   **View Logic** — a way to display your **State** as widgets that may produce **Messages** on user interaction
 -   **Update Logic** — a way to react to **Messages** and update your **State**
 
-### Reworking Iced's Example
+## Reworking Iced's Example
 
 Folding their example code into a working example in one code block:
 
@@ -102,7 +100,7 @@ If you run this you'll get a small window that looks like the following, allowin
 
 This is also available as a demo you can run [here](https://github.com/quintenpalmer/quintenpalmer.github.io/tree/main/codeexamples/2023-02-05-music-gui).
 
-### Additional Iced (And Related) Resources
+## Additional Iced (And Related) Resources
 
 Hopefully this way of structuring an interactive app makes sense, if not I can definitely augment this section or feel free to browse more documentation on the subject:
 
@@ -111,6 +109,8 @@ Hopefully this way of structuring an interactive app makes sense, if not I can d
 * [Iced](https://docs.rs/iced/latest/iced/#overview)
 
 With the Iced architecture under our belt, let's try to actually build something one step up from this toy counter example!
+
+# Building Our Iced GUI
 
 ## Initial Code
 
@@ -166,7 +166,11 @@ And now, let's build our initial skeleton of files:
 4 directories, 13 files
 ```
 
-Alright, and now to actually start fleshing out some code for this demo app. (We already went over the `Cargo.toml` \[and the `Cargo.lock` is not for us to edit\]). Let's start with the `src/main.rs` and work through these files to build a working app:
+Alright, and now to actually start fleshing out some code for this demo app. We already went over the `Cargo.toml` and the `Cargo.lock` is not for us to edit. Let's get this working!
+
+## Write All The Code
+
+Let's start with the `src/main.rs` and work through these files to build a working app:
 
 ### **`src/main.rs`**
 ```rust
