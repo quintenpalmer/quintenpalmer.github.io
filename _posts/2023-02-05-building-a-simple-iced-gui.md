@@ -39,7 +39,7 @@ struct CounterState {
 }
 
 // This are our Message
-// They are the possible user interactions of our counter: the button presses.
+// They represent the possible interactions the user can take: incrementing and decrementing the counter (as we'll see, through button presses)
 #[derive(Debug, Clone, Copy)]
 pub enum CounterMessage {
     IncrementPressed,
@@ -94,6 +94,8 @@ fn main() {
 }
 ```
 
+As mentioned, here is the [`Sandbox`](https://docs.rs/iced/latest/iced/trait.Sandbox.html) trait.
+
 If you run this you'll get a small window that looks like the following, allowing you to click to increment and decrement the counter:
 
 ![Animated Counter Gif](/assets/2023-02-05/animated_counter.gif)
@@ -102,13 +104,13 @@ This is also available as a demo you can run [here](https://github.com/quintenpa
 
 ## Additional Iced (And Related) Resources
 
-Hopefully this way of structuring an interactive app makes sense, if not I can definitely augment this section or feel free to browse more documentation on the subject:
+Hopefully this way of structuring an interactive app makes sense; if not I can definitely augment this section or feel free to browse more documentation on the subject:
 
 * [Elm](https://guide.elm-lang.org/architecture/)
 * [Redux](https://redux.js.org/introduction/core-concepts)
 * [Iced](https://docs.rs/iced/latest/iced/#overview)
 
-With the Iced architecture under our belt, let's try to actually build something one step up from this toy counter example!
+With the Iced architecture under our belt, let's try to actually build something slightly more complex than this toy counter example!
 
 # Building Our Iced GUI
 
@@ -269,7 +271,7 @@ pub enum Navigate {
 }
 ```
 
-There is obviously a _very_ strong parallel between the navigation messages and the page states. Excruciatingly parallel, it makes me want to be able to DRY them up or something, but they are conceptually different constructs, so they are defined once over in each location. Ok, now on to some actual functions! Update!
+There is obviously a _very_ strong parallel between the navigation messages and the page states. Excruciatingly parallel, it makes me want to be able to DRY them up or something, but they are conceptually different constructs, so they are defined once over in each location. Ok, now on to some actual functions: update!
 
 ### **`src/gui/update.rs`**
 ```rust
@@ -368,7 +370,7 @@ impl iced::Sandbox for state::State {
 
 And our app would technicall run now! See the ["Hello World"](https://docs.rs/iced/0.7.0/iced/trait.Sandbox.html#a-simple-hello-world) for the Iced `Sandbox` trait for an even simpler satisfaction of this trait.
 
-It would admittedly look very boring as our view is always the same TODO text, so let's fill in the view logic and then take a look at what we get:
+It would admittedly look very boring as our view is always the same `"TODO"` text, so let's fill in the view logic and then take a look at what we get:
 
 ### **`src/gui/view/mod.rs`**
 ```rust
