@@ -2,11 +2,23 @@ use crate::shared;
 
 use super::{message, state};
 
-pub fn handle_message(state: &mut state::State, message: message::Message) {
+pub fn handle_message(
+    state: &mut state::State,
+    message: message::Message,
+) -> iced::Command<message::Message> {
     match message {
-        message::Message::Nav(nav_message) => handle_nav(state, nav_message),
-        message::Message::SinkCallback(callb) => handle_sink_callback(state, callb),
-        message::Message::ErrorResponse(error_message) => handle_error(state, error_message),
+        message::Message::Nav(nav_message) => {
+            handle_nav(state, nav_message);
+            iced::Command::none()
+        }
+        message::Message::SinkCallback(callb) => {
+            handle_sink_callback(state, callb);
+            iced::Command::none()
+        }
+        message::Message::ErrorResponse(error_message) => {
+            handle_error(state, error_message);
+            iced::Command::none()
+        }
     }
 }
 

@@ -34,8 +34,7 @@ impl iced::Application for state::State {
     }
 
     fn update(&mut self, message: message::Message) -> iced::Command<Self::Message> {
-        update::handle_message(self, message);
-        iced::Command::none()
+        update::handle_message(self, message)
     }
 
     fn view(&self) -> iced::Element<message::Message> {
