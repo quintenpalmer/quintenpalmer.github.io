@@ -21,7 +21,12 @@ pub fn view_state<'a>(state: &'a state::State) -> iced::Element<'a, message::Mes
         crumb_button_row = crumb_button_row.push(Scrollable::new(crumb_button));
     }
 
-    Column::new().push(crumb_button_row).push(body).into()
+
+    let mut ret = Column::new();
+
+    ret = ret.push(crumb_button_row);
+    ret = ret.push(body);
+    ret.into()
 }
 
 fn view_page<'a>(
