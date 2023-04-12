@@ -11,6 +11,9 @@ impl iced::Sandbox for state::State {
         state::State {
             page: state::Page::Home,
             datastore: datastore::model::Library::from_library_directory(".").unwrap(),
+            playback: state::PlaybackInfo {
+                currently_playing: None,
+            },
         }
     }
 
