@@ -5,7 +5,7 @@ use iced;
 use crate::datastore;
 use crate::sink;
 
-use super::{message, state, update, view};
+use super::{message, state, subscription, update, view};
 
 impl iced::Application for state::State {
     type Executor = iced::executor::Default;
@@ -40,5 +40,9 @@ impl iced::Application for state::State {
 
     fn view(&self) -> iced::Element<message::Message> {
         view::view_state(self)
+    }
+
+    fn subscription(&self) -> iced::Subscription<Self::Message> {
+        subscription::sink_callback(&self)
     }
 }
