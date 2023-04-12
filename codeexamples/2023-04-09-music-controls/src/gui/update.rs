@@ -1,3 +1,5 @@
+use std::sync::mpsc;
+
 use crate::shared;
 
 use super::{message, state};
@@ -11,6 +13,7 @@ pub fn handle_message(
             handle_nav(state, nav_message);
             iced::Command::none()
         }
+        message::Message::Control(control_message) => handle_control(state, control_message),
         message::Message::SinkCallback(callb) => {
             handle_sink_callback(state, callb);
             iced::Command::none()
@@ -53,6 +56,29 @@ fn handle_error(_state: &mut state::State, error_message: Result<(), String>) {
     match error_message {
         Ok(()) => println!("no error was seen"),
         Err(err_string) => println!("We had seen this error: {}", err_string),
+    }
+}
+
+fn handle_control(
+    state: &mut state::State,
+    control_message: message::Control,
+) -> iced::Command<message::Message> {
+    match control_message {
+        message::Control::PlayTrack(track) => iced::Command::perform(
+            MessageCommandSender::new(
+                state.sink.sink_message_sender.clone(),
+                shared::SinkMessage::LoadSong(
+                    track
+                        .full_path
+                        .file_name()
+                        .unwrap()
+                        .to_string_lossy()
+                        .to_string(),
+                ),
+            )
+            .send_message(),
+            message::Message::ErrorResponse,
+        ),
     }
 }
 

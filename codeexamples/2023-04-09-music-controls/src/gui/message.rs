@@ -1,8 +1,10 @@
+use crate::datastore;
 use crate::shared;
 
 #[derive(Debug, Clone)]
 pub enum Message {
     Nav(Navigate),
+    Control(Control),
     SinkCallback(shared::SinkCallbackMessage),
     ErrorResponse(Result<(), String>),
 }
@@ -13,4 +15,9 @@ pub enum Navigate {
     ArtistList,
     ArtistAlbumList(String),
     AlbumTrackList(String, String),
+}
+
+#[derive(Debug, Clone)]
+pub enum Control {
+    PlayTrack(datastore::model::AudioFileTrackMetadata),
 }
