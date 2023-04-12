@@ -4,6 +4,8 @@ use simplemusicplayback::backend as sink;
 
 mod gui;
 
+use iced::Application;
+
 fn main() {
-    println!("Hello, world!");
+    gui::state::State::run(iced::Settings::default()).unwrap();
 }
