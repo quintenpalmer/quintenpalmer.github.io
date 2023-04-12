@@ -52,6 +52,7 @@ pub struct Disc {
     pub tracks: BTreeMap<u32, AudioFileTrackMetadata>,
 }
 
+#[derive(Debug, Clone)]
 pub struct AudioFileTrackMetadata {
     pub artist: String,
     pub album_artist: Option<String>,
