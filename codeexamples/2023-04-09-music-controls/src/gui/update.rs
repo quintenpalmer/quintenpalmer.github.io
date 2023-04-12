@@ -6,6 +6,7 @@ pub fn handle_message(state: &mut state::State, message: message::Message) {
     match message {
         message::Message::Nav(nav_message) => handle_nav(state, nav_message),
         message::Message::SinkCallback(callb) => handle_sink_callback(state, callb),
+        message::Message::ErrorResponse(error_message) => handle_error(state, error_message),
     }
 }
 
@@ -33,5 +34,12 @@ fn handle_sink_callback(state: &mut state::State, callback_message: shared::Sink
             None => (),
         },
         shared::SinkCallbackMessage::SongEnded => state.playback.currently_playing = None,
+    }
+}
+
+fn handle_error(_state: &mut state::State, error_message: Result<(), String>) {
+    match error_message {
+        Ok(()) => println!("no error was seen"),
+        Err(err_string) => println!("We had seen this error: {}", err_string),
     }
 }

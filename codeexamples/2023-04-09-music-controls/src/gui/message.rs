@@ -4,6 +4,7 @@ use crate::shared;
 pub enum Message {
     Nav(Navigate),
     SinkCallback(shared::SinkCallbackMessage),
+    ErrorResponse(Result<(), String>),
 }
 
 #[derive(Debug, Clone)]
