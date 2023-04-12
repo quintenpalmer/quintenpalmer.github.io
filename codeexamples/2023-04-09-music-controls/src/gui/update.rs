@@ -67,14 +67,7 @@ fn handle_control(
         message::Control::PlayTrack(track) => iced::Command::perform(
             MessageCommandSender::new(
                 state.sink.sink_message_sender.clone(),
-                shared::SinkMessage::LoadSong(
-                    track
-                        .full_path
-                        .file_name()
-                        .unwrap()
-                        .to_string_lossy()
-                        .to_string(),
-                ),
+                shared::SinkMessage::LoadSong(track.full_path.to_string_lossy().to_string()),
             )
             .send_message(),
             message::Message::ErrorResponse,
