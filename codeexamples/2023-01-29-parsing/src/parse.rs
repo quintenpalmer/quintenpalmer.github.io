@@ -55,6 +55,7 @@ mod flac {
             track_title: get_string_result(&tag_map, "title", &path)?,
             genre: get_string_option(&tag_map, "genre"),
             date: get_string_option(&tag_map, "date"),
+            full_path: path,
         })
     }
 
@@ -113,6 +114,7 @@ mod id3 {
             track_title: get_string_result(tag.title(), "title", &path)?,
             genre: tag.genre().map(|x| x.to_string()),
             date: tag.year().map(|x| x.to_string()),
+            full_path: path,
         })
     }
 

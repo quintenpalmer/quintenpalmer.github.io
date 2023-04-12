@@ -1,5 +1,6 @@
 use std::collections::BTreeMap;
 use std::io;
+use std::path;
 
 use claxon;
 use id3;
@@ -62,6 +63,7 @@ pub struct AudioFileTrackMetadata {
     pub track_title: String,
     pub genre: Option<String>,
     pub date: Option<String>,
+    pub full_path: path::PathBuf,
 }
 
 impl AudioFileTrackMetadata {
