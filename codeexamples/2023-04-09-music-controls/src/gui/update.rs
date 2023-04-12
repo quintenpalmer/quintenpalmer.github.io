@@ -64,14 +64,17 @@ fn handle_control(
     control_message: message::Control,
 ) -> iced::Command<message::Message> {
     match control_message {
-        message::Control::PlayTrack(track) => iced::Command::perform(
-            MessageCommandSender::new(
-                state.sink.sink_message_sender.clone(),
-                shared::SinkMessage::LoadSong(track.full_path.to_string_lossy().to_string()),
+        message::Control::PlayTrack(track) => {
+            state.playback.currently_playing = Some((track.clone(), true));
+            iced::Command::perform(
+                MessageCommandSender::new(
+                    state.sink.sink_message_sender.clone(),
+                    shared::SinkMessage::LoadSong(track.full_path.to_string_lossy().to_string()),
+                )
+                .send_message(),
+                message::Message::ErrorResponse,
             )
-            .send_message(),
-            message::Message::ErrorResponse,
-        ),
+        }
     }
 }
 
