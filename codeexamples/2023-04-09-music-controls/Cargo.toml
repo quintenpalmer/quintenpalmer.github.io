@@ -9,6 +9,7 @@ edition = "2021"
 rodio = "0.16"
 
 iced = "0.7"
+iced_futures = "0.5"
 
 simpleaudioparser = { path = "../2023-01-29-parsing" }
 simplemusicplayback = { path = "../2023-03-26-music-playback" }
