@@ -36,10 +36,14 @@ pub fn view_album_track_list<'a>(
     {
         let mut tracks_column = Column::new().padding(10);
         for track in disc.tracks.values() {
-            let track_row = Row::new()
-                .spacing(10)
-                .push(text(format!("{:>3}", track.track.unwrap_or(1))).size(26))
-                .push(text(track.track_title.clone()).size(26));
+            let track_row =
+                Row::new()
+                    .spacing(10)
+                    .push(button(">").on_press(message::Message::Control(
+                        message::Control::PlayTrack(track.clone()),
+                    )))
+                    .push(text(format!("{:>3}", track.track.unwrap_or(1))).size(26))
+                    .push(text(track.track_title.clone()).size(26));
             tracks_column = tracks_column.push(track_row);
         }
         discs_column = discs_column
