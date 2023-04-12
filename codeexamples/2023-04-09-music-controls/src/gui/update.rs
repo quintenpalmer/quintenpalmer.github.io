@@ -55,3 +55,30 @@ fn handle_error(_state: &mut state::State, error_message: Result<(), String>) {
         Err(err_string) => println!("We had seen this error: {}", err_string),
     }
 }
+
+struct MessageCommandSender<T> {
+    tx: mpsc::Sender<T>,
+    message: T,
+}
+
+impl<T: std::fmt::Debug> MessageCommandSender<T> {
+    fn new(tx: mpsc::Sender<T>, message: T) -> Self {
+        MessageCommandSender {
+            tx: tx,
+            message: message,
+        }
+    }
+
+    async fn send_message(self) -> Result<(), String> {
+        match self.tx.send(self.message) {
+            Ok(a) => {
+                println!("GUI:\tresp was {:?}", a);
+                Ok(())
+            }
+            Err(e) => {
+                println!("GUI:\terr resp was {:?}", e);
+                Err(format!("{:?}", e))
+            }
+        }
+    }
+}
