@@ -26,7 +26,7 @@ pub fn view_state<'a>(state: &'a state::State) -> iced::Element<'a, message::Mes
     let mut ret = Column::new();
 
     ret = ret.push(crumb_button_row);
-    ret = ret.push(body);
+    ret = ret.push(Row::new().push(body).height(iced::Length::Fill));
     match playback_info {
         Some(actual_playback_info) => ret = ret.push(actual_playback_info),
         None => (),
