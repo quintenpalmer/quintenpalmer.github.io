@@ -61,11 +61,11 @@ fn view_playback_info<'a>(
             let mut row = Row::new().spacing(10);
             if playing {
                 row = row.push(
-                    button(" >").on_press(message::Message::Control(message::Control::Pause)),
+                    button("||").on_press(message::Message::Control(message::Control::Pause)),
                 );
             } else {
                 row = row
-                    .push(button("||").on_press(message::Message::Control(message::Control::Play)));
+                    .push(button(" >").on_press(message::Message::Control(message::Control::Play)));
             }
             row = row.push(text(track.track_title.clone()));
             Some(row.into())
