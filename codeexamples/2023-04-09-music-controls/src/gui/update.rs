@@ -80,34 +80,32 @@ fn handle_control(
     control_message: message::Control,
 ) -> iced::Command<message::Message> {
     match control_message {
-        message::Control::Play => iced::Command::perform(
-            MessageCommandSender::new(
-                state.sink.sink_message_sender.clone(),
-                shared::SinkMessage::PlayButton,
-            )
-            .send_message(),
-            message::Message::ErrorResponse,
+        message::Control::Play => sink_message(
+            state.sink.sink_message_sender.clone(),
+            shared::SinkMessage::PlayButton,
         ),
-        message::Control::Pause => iced::Command::perform(
-            MessageCommandSender::new(
-                state.sink.sink_message_sender.clone(),
-                shared::SinkMessage::PauseButton,
-            )
-            .send_message(),
-            message::Message::ErrorResponse,
+        message::Control::Pause => sink_message(
+            state.sink.sink_message_sender.clone(),
+            shared::SinkMessage::PauseButton,
         ),
         message::Control::PlayTrack(track) => {
             state.playback.currently_playing = Some((track.clone(), true));
-            iced::Command::perform(
-                MessageCommandSender::new(
-                    state.sink.sink_message_sender.clone(),
-                    shared::SinkMessage::LoadSong(track.full_path.to_string_lossy().to_string()),
-                )
-                .send_message(),
-                message::Message::ErrorResponse,
+            sink_message(
+                state.sink.sink_message_sender.clone(),
+                shared::SinkMessage::LoadSong(track.full_path.to_string_lossy().to_string()),
             )
         }
     }
+}
+
+fn sink_message(
+    tx: mpsc::Sender<shared::SinkMessage>,
+    message: shared::SinkMessage,
+) -> iced::Command<message::Message> {
+    iced::Command::perform(
+        MessageCommandSender::new(tx, message).send_message(),
+        message::Message::ErrorResponse,
+    )
 }
 
 struct MessageCommandSender<T> {
