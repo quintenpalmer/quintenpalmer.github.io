@@ -8,17 +8,24 @@ pub fn handle_message(
     state: &mut state::State,
     message: message::Message,
 ) -> iced::Command<message::Message> {
+    println!("handling _a_ message...");
     match message {
         message::Message::Nav(nav_message) => {
+            println!("handling nav message");
             handle_nav(state, nav_message);
             iced::Command::none()
         }
-        message::Message::Control(control_message) => handle_control(state, control_message),
+        message::Message::Control(control_message) => {
+            println!("handling control message");
+            handle_control(state, control_message)
+        }
         message::Message::SinkCallback(callb) => {
+            println!("handling callback message");
             handle_sink_callback(state, callb);
             iced::Command::none()
         }
         message::Message::ErrorResponse(error_message) => {
+            println!("handling error message");
             handle_error(state, error_message);
             iced::Command::none()
         }
@@ -40,15 +47,24 @@ fn handle_nav(state: &mut state::State, nav_message: message::Navigate) {
 
 fn handle_sink_callback(state: &mut state::State, callback_message: shared::SinkCallbackMessage) {
     match callback_message {
-        shared::SinkCallbackMessage::Playing => match state.playback.currently_playing {
-            Some((ref _track, ref mut playing)) => *playing = true,
-            None => (),
-        },
-        shared::SinkCallbackMessage::Paused => match state.playback.currently_playing {
-            Some((ref _track, ref mut playing)) => *playing = false,
-            None => (),
-        },
-        shared::SinkCallbackMessage::SongEnded => state.playback.currently_playing = None,
+        shared::SinkCallbackMessage::Playing => {
+            println!("we're now officially playing");
+            match state.playback.currently_playing {
+                Some((ref _track, ref mut playing)) => *playing = true,
+                None => (),
+            }
+        }
+        shared::SinkCallbackMessage::Paused => {
+            println!("we're now paused");
+            match state.playback.currently_playing {
+                Some((ref _track, ref mut playing)) => *playing = false,
+                None => (),
+            }
+        }
+        shared::SinkCallbackMessage::SongEnded => {
+            println!("the song has officially ended");
+            state.playback.currently_playing = None
+        }
     }
 }
 
