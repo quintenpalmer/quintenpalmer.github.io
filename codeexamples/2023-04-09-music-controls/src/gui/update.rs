@@ -80,6 +80,22 @@ fn handle_control(
     control_message: message::Control,
 ) -> iced::Command<message::Message> {
     match control_message {
+        message::Control::Play => iced::Command::perform(
+            MessageCommandSender::new(
+                state.sink.sink_message_sender.clone(),
+                shared::SinkMessage::PlayButton,
+            )
+            .send_message(),
+            message::Message::ErrorResponse,
+        ),
+        message::Control::Pause => iced::Command::perform(
+            MessageCommandSender::new(
+                state.sink.sink_message_sender.clone(),
+                shared::SinkMessage::PauseButton,
+            )
+            .send_message(),
+            message::Message::ErrorResponse,
+        ),
         message::Control::PlayTrack(track) => {
             state.playback.currently_playing = Some((track.clone(), true));
             iced::Command::perform(

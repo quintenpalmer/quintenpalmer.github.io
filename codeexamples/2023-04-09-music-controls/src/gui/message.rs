@@ -19,5 +19,7 @@ pub enum Navigate {
 
 #[derive(Debug, Clone)]
 pub enum Control {
+    Play,
+    Pause,
     PlayTrack(datastore::model::AudioFileTrackMetadata),
 }
