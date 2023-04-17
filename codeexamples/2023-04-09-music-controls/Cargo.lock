@@ -2258,6 +2258,14 @@ dependencies = [
  "iced",
  "rodio",
  "simpleaudioparser",
+ "simplemusicplayback",
+]
+
+[[package]]
+name = "simplemusicplayback"
+version = "0.1.0"
+dependencies = [
+ "rodio",
 ]
 
 [[package]]
