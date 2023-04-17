@@ -1,7 +1,3 @@
-mod backend;
-mod client;
-mod shared;
-
 fn main() {
-    client::looping_main()
+    simplemusicplayback::client::looping_main()
 }
