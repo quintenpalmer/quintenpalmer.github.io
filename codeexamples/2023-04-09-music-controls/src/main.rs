@@ -1,8 +1,8 @@
 use simpleaudioparser as datastore;
+use simplemusicplayback::shared as shared;
+use simplemusicplayback::backend as sink;
 
 mod gui;
-mod shared;
-mod sink;
 
 fn main() {
     println!("Hello, world!");
