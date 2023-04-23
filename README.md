@@ -10,3 +10,4 @@ This is the landing page for Quinten's 2023 Blog Post Series
 * [Why Acquire Music](/2023/03/12/why-acquire-music) (2023/03/12)
 * [Music Playback and Controls](/2023/03/26/music-playback-and-controls) (2023/03/26)
 * [Music Controls In GUI](/2023/04/16/music-controls-in-gui) (2023/04/16)
+* [Syncing Music and Disk Usage](/2023/04/23/syncing-music-and-disk-usage) (2023/04/23)
